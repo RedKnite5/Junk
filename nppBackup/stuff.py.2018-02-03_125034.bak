@@ -1,0 +1,17 @@
+#   python stuff.py
+import pydub
+from pydub.playback import play
+import time
+
+def coroutine_play():
+	start = yield
+	sound = pydub.AudioSegment.from_file("No_Strings.mp4")
+	pydub.playback.play(sound)
+	
+track = coroutine_play()
+next(track)
+track.send("start")
+
+print(2+2)
+time.sleep(3)
+track.close()

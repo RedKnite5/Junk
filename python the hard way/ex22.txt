@@ -1,0 +1,57 @@
+print: it prints things
+": it is used to define what you want to print
+#: anything after it on that line will not affect the program
++: adds numbers
+-: subtracts numbers
+/: divides numbers
+*: multiplys numbers and tells agrs that what you have put in it is a list
+%: divies a number by 100 and is part of formaters which are replaced by the value at the end of the line
+<: shows that whatever is infront of it is less than what is after
+>: shows that whatever is infront of it is more that what is after
+<=: means that whatever is behind it is equel or more than what is infront
+>=: means that whatever is behind it is equel or less than what is infront
+=: used to define a variable
+_: used as an imaganary space
+%s: to use instad of something else you have to put its substatute at the end after a %
+%d: to use instad of something else you have to put its substatute at the end after a %
+%r: to is replaced with exactly what you replace it with
+(: at the begining of something to say do this first or exclude it
+): at the end of something to say do this first or exclude it
+false: not true
+true: correct
+""": to tell it you want to print some thing that is on multible lines
+\\:a backslash not in python
+\':a single quote not in python
+\":a single dubble quote not in python
+\a:
+\b:
+\f:
+\n:
+\N:
+\r ASCII:
+\t ASCII:
+\uxxxx:
+\Uxxxxxxxx:
+\v:
+\ooo:will return a letter in octal
+\xhh:will return a letter in hex
+raw_input: a variable that becomes whatever you type in 
+,: makes print not carry over to the next line when you end it
+int: tuns a string into a intager
+input: a variable that turns into python code not text
+from sys import: use when you are trying to get a modual from sys
+argv: a modual that is like a giant variable
+prompt:
+open: that a variable is whatever is inside a file not the file name
+.read: prints a variable's value
+.truncate: erase a file
+.write: writeing a file
+.close: saves a file
+len: gets the length of a string and returns it as a number
+os.path: one place you can get moduals
+exists: a modual
+args: a giant variable that only works in functions
+def: how you create a function
+.seek: go to that charactor in a file
+.readline: prints the selected line
+return: makes a function emit some thing

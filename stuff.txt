@@ -1,0 +1,7 @@
+num is a integer 'type declaration
+num is 5
+
+s is a string
+s is 'o
+
+disp[num * s]

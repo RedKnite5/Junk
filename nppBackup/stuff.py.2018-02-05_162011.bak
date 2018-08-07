@@ -1,0 +1,31 @@
+#   python stuff.py
+
+
+
+class thing:
+	pass
+	
+obj = thing()
+
+thing.name = "you"
+
+print(obj.name)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

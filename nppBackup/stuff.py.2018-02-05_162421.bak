@@ -1,0 +1,26 @@
+#   python stuff.py
+
+
+
+def f():
+	print("yo")
+	f.count += 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

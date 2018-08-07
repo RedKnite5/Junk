@@ -1,0 +1,22 @@
+#   python stuff.py
+
+
+def func():
+	print("Pizza")
+	
+def dec():
+	print("pre processing")
+	func()
+	print("post processing")
+
+
+
+dec()
+
+
+
+
+
+
+
+

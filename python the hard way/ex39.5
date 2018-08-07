@@ -1,0 +1,25 @@
+def Map(num_buckets=256):
+	aMap = []
+	for i in range(0, num_buckets):
+		aMap.append([])
+	return aMap
+
+def Map_hash(aMap, key):
+	return hash(key) % len(aMap)
+
+def Map_get_bucket(aMap, key)
+	bucket_id = map_hash(aMap, key)
+	return aMap[bucket_id]
+	
+def Map_get_slot(aMap, key, default=None):
+	bucket = Map_get_bucket(aMap,key,)
+	
+	for i, kv in enumetate(bucket):
+		k, v = kv
+		if key == k:
+			retrun i, k, v
+	
+	retrurn-1, key, default
+	
+def map_get(aMap, key, default=None):
+	

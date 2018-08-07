@@ -1,0 +1,31 @@
+#   python stuff.py
+
+
+
+class person:
+	def __init__(self, name):
+		self.name = name
+		
+	def __repr__(self):
+		return(self.name)
+	
+	
+def polynomial_creator(*coefficients):
+	def polynomial(x):
+		for index, coeff in enumerate(coefficients):
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

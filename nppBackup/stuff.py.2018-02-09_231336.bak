@@ -1,0 +1,23 @@
+#   python stuff.py
+import numba
+
+def func():
+	print("Pizza")
+
+@numba.autojit
+def dec():
+	print("pre processing")
+	func()
+	print("post processing")
+
+
+
+dec()
+
+
+
+
+
+
+
+

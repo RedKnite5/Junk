@@ -1,0 +1,39 @@
+#   python stuff.py
+
+
+
+class person:
+	def __init__(self, name):
+		self.name = name
+		
+	def __repr__(self):
+		return(self.name)
+	
+	
+def polynomial_creator(*coefficients):
+	def polynomial(x):
+		res = 0
+		for index, coeff in enumerate(coefficients):
+			res += coeff*x**index
+		return(res)
+	return(polynomial)
+	
+binomial = polynomial_creator(1,2)
+
+for i in (3,2,1,0):
+	print(binomial(i))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

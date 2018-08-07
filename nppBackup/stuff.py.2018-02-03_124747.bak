@@ -1,0 +1,5 @@
+#   python stuff.py
+import pydub
+
+def coroutine_play():
+	sound = pydub.AudioSegment.from_file(

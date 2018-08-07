@@ -1,0 +1,31 @@
+#   python stuff.py
+
+
+
+class thing:
+	other_thing = 5
+	
+obj = thing()
+
+thing.name = "you"
+
+print(obj.name)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
