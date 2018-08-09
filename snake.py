@@ -16,7 +16,7 @@ from random import randint, choice
 
 boxsize = boxwidth, boxheight = 30, 30
 boxeswide, boxeshigh = 10, 10
-time = 150
+time = 550
 
 size = width, height = boxwidth * boxeswide, boxheight * boxeshigh
 

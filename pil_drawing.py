@@ -1,6 +1,7 @@
 # pil_drawing.py
 
 from PIL import Image, ImageDraw
+import PIL
 import os
 
 image_name = "mess2.jpg"
@@ -20,7 +21,7 @@ draw.text((200,256),"Python is awesome",fill="orange")
 pic.show()
 
 save_dir = os.path.join(os.environ["userprofile"],
-"Dropbox\Python\gen_images",
+"Documents\Python\junk\gen_images",
 image_name)
 
 pic.save(save_dir,"JPEG")

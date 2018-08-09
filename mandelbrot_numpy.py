@@ -31,7 +31,7 @@ def point(A, B, iterations, zoom, loc):
 		if polar(z)[0] > 2:
 			return(k)
 		# function line
-		z = z ** z + (a + b * 1j)
+		z = z * z + (a + b * 1j)
 	return(iterations)
 	
 def move_point(event):
