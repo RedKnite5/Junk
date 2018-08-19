@@ -11,7 +11,7 @@ if __name__ == "__main__":
 	from subprocess import run
 
 	packages = [dist.project_name for dist in pkg_resources.working_set]
-	run("pip install --upgrade " + ' '.join(packages), shell=True)
+	run("pip3 install --upgrade " + ' '.join(packages), shell=True)
 
 	libs = ["sys", "math", "random", "pickle", "sympy", "hashlib",
 		"time", "tkinter", "itertools", "tensorflow", "cx_Freeze",
@@ -28,7 +28,7 @@ if __name__ == "__main__":
 	modules_list = {}
 
 	if os.name == "nt":
-		libs.extend(("winsound",)) 
+		libs.extend(("winsound",))
 		libs.extend(("mahotas", "appJar"))
 
 	if os.name == "posix":
@@ -48,7 +48,7 @@ print(failed_imports)
 
 for i in failed_imports:
 	try:
-		run("pip install " + i, shell = True)
+		run("pip3 install " + i, shell = True)
 	except:
 		pass
 
