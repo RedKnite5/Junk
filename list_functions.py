@@ -15,6 +15,7 @@ import functools
 import fractions
 import tokenize
 import io
+import typing as ty
 
 tau = 2 * math.pi
 phi = (1 + 5 ** 0.5) / 2
@@ -24,7 +25,7 @@ phi = (1 + 5 ** 0.5) / 2
 class rational:
 	'''Create a generator of rational numbers.'''
 
-	def __init__(self, max=-1):
+	def __init__(self, max: int =-1) -> None:
 		self.max = max
 		self.dir = "up"
 
@@ -33,7 +34,7 @@ class rational:
 		self.b = 1
 		return self
 
-	def __next__(self):
+	def __next__(self) -> ty.Tuple[int, int]:
 		ans = self.a / self.b
 		
 		if self.a == self.max:
@@ -56,7 +57,7 @@ class rational:
 		return self.a, self.b
 
 	
-def lower_input(prompt=None):
+def lower_input(prompt: ty.Optional[str]=None) -> str:
 	'''Call input with the prompt and return the striped lowercase version
 	of the input.
 	'''
@@ -64,13 +65,13 @@ def lower_input(prompt=None):
 	return input(prompt).strip().lower()
 
 	
-def devar(*args):
+def devar(*args: ty.Any) -> ty.Tuple[ty.Any]:
 	'''Return the input.'''
 
 	return args
 
 
-def find_factor(n, i=2):
+def find_factor(n: int, i: int=2) -> int:
 	'''Find the smallest prime factor of n above i.'''
 
 	if i == 2:
@@ -86,7 +87,7 @@ def find_factor(n, i=2):
 	return n
 
 
-def factorize(n, start=2):
+def factorize(n: int, start: int=2) -> ty.Tuple[int, ...]:
 	'''Return a tuple of prime factors of n'''
 
 	factors = []
@@ -98,7 +99,7 @@ def factorize(n, start=2):
 	return tuple(factors)
 
 
-def quad_form(a, b, c):
+def quad_form(a: float, b: float, c: float) -> ty.Tuple[float, float]:
 	'''Return a tuple with the results of the quadratic equation of the
 	arguments.'''
 
@@ -106,53 +107,59 @@ def quad_form(a, b, c):
 	return (-b + rand) / (2 * a), (-b - rand) / (2 * a)
 
 
-def un_pyth(a, c):
-	'''Find a side of a right triangle give one leg and the hypotanuse.'''
+def un_pyth(a: float, c: float) -> float:
+	'''Find a side of a right triangle give one leg and the
+	hypotanuse.'''
 
 	return ((c * c) - (a * a)) ** .5
 
 
-def insert_string(main_str, insert, place):
+def insert_string(main_str: str, insert: str, place: int) -> str:
 	'''Insert a given string into another string at a given index.'''
 
 	return "".join(list(main_str).insert(place, insert))
 
 
-def factorial(n):
+def factorial(n: int) -> int:
 	'''Return the factorial of n.'''
 
 	ans = 1
-	for i in range(1,n + 1):
+	for i in range(1, n + 1):
 		ans = ans * i
 	return ans
 
 	
-def permute(n, r):
+def permute(n: int, r: int) -> int:
 	'''Return n permute r.'''
 
 	if r > n:
 		raise ValueError("second argument: %d is greater than first argument: %d"%(r,n))
 	else:
-		return factorial(n) / factorial(n - r)
+		return factorial(n) // factorial(n - r)
 
 	
-def choose(n, r):
+def choose(n: int, r: int) -> int:
 	'''Return n choose r.'''
 
 	if r > n:
 		raise ValueError("second argument: %d is greater than first argument: %d"%(r,n))
 	else:
-		return permute(n, r) / factorial(r)
+		return permute(n, r) // factorial(r)
 
 
-def rand_str(length=4, charset="abcdefghijklmnopqrstuvwxyz"):
+def rand_str(
+	length: int=4, charset: ty.Iterable="abcdefghijklmnopqrstuvwxyz") \
+	-> str:
 	'''Return a random string of length length from the character set
 	charset.'''
 
-	return "".join(charset[random.randint(0, len(charset) - 1)] for i in range(length))
+	return "".join(
+		charset[random.randint(
+			0,
+			len(charset) - 1)] for i in range(length))
 
 
-def start_substr(substr, string):
+def start_substr(substr: str, string: str) -> int:
 	'''Find index of first occurance of substr in string.'''
 
 	if substr not in string:
@@ -167,7 +174,7 @@ def start_substr(substr, string):
 				return i
 
 
-def find_center(item):
+def find_center(item) -> ty.Tuple[float, float]:
 	'''Something to do with graphics.'''
 
 	c = a.coords(item)
@@ -178,14 +185,17 @@ def find_center(item):
 	else:
 		raise ValueError
 
-		
-def overlap(a, b):
+
+def overlap(
+	a: ty.Sequence[float],
+	b: ty.Sequence[float]) \
+	-> float:
 	'''Find the overlap between intervals.'''
 	
 	return max(0, min(a[1], b[1]) - max(a[0], b[0]))
 
 
-def num_to_color(number, max=100):
+def num_to_color(number: float, max: float=100) -> str:
 	'''Convert an integer to the html format of color.'''
 	
 	color = colorsys.hls_to_rgb(number / max, 100, 1)
@@ -195,7 +205,8 @@ def num_to_color(number, max=100):
 	return "#" + "".join(ans)
 
 
-def div(inter, pieces):
+def div(inter: ty.Sequence[ty.Sequence[float]],
+	pieces: int) -> ty.Tuple[ty.Tuple[float, float], ...]:
 	'''Divide an interval into pieces number of pieces and return it as
 	a list of length 2 tuples.'''
 
@@ -207,9 +218,13 @@ def div(inter, pieces):
 	return ans
 
 
-def rect(par=[[0, 1]], point="m", y=lambda a: a):
+def rect(
+	par: ty.Sequence[ty.Sequence[float]]=((0, 1),),
+	point: str="m",
+	y: ty.Callable[[float], float]=lambda a: a)  \
+	-> float:
 	'''Approximate the integral of y using rectangles.'''
-	
+
 	area = 0
 	for i in par:
 		if point in ("m","mid","midpoint"):
@@ -218,12 +233,15 @@ def rect(par=[[0, 1]], point="m", y=lambda a: a):
 			x_val = i[0]
 		elif point in ("r", "right", "right end point"):
 			x_val = i[1]
-	
+
 		area += (i[1] - i[0]) * y(x_val)
 	return area
 
 
-def trap(par=[[0, 1]], y=lambda a: a):
+def trap(
+	par: ty.Sequence[ty.Sequence[float]]=((0, 1),),
+	y: ty.Callable[[float], float]=lambda a: a)  \
+	-> float:
 	'''Approximate the integral of y using the trapezoid method.'''
 	
 	area = 0
@@ -232,7 +250,10 @@ def trap(par=[[0, 1]], y=lambda a: a):
 	return area
 
 
-def simp(par=[[0, 1]], y=lambda a: a):
+def simp(
+	par: ty.Sequence[ty.Sequence[float]]=((0, 1),),
+	y: ty.Callable[[float], float]=lambda a: a)  \
+	-> float:
 	'''Use the simpsons method to approximate the integral of y using the
 	partitioning of par.
 	'''
@@ -243,19 +264,19 @@ def simp(par=[[0, 1]], y=lambda a: a):
 	return area
 
 
-def sigmoid(x):
+def sigmoid(x: float) -> float:
 	'''A simple logistic curve.'''
-	
+
 	return 1 / (1 + e ** (-x))
 
 
-def comp_abs(x):
+def comp_abs(x: complex) -> float:
 	'''Return the distance to the origin of a complex number.'''
-	
+
 	return (x.real * x.real + x.imag * x.imag) ** .5
 
-	
-def html_color(color):
+
+def html_color(color: int) -> str:
 	'''Convert an integer to the html format of color.'''
 	
 	ans = list(map(lambda c: str(hex(int(c)))[2:], color))
@@ -263,21 +284,21 @@ def html_color(color):
 	return "#" + "".join(ans)
 
 
-def sinh(x):
+def sinh(x: float) -> float:
 	'''Return the hyperbolic sine of x.'''
-	
-	return ((e ** x) - (e ** (-1 * x))) / 2
-	
 
-def cosh(x):
+	return ((e ** x) - (e ** (-1 * x))) / 2
+
+
+def cosh(x: float) -> float:
 	'''Return the hyperbolic cosine of x.'''
 	
 	return ((e ** x) + (e ** (-1 * x))) / 2
 	
 
-def hype(a, b, n):
-	'''The Hyperion sequence implemented recursively.'''
-	
+def hype(a: float, b: float, n: int) -> float:
+	'''The Hyperoperation sequence implemented recursively.'''
+
 	if n == 0:
 		return b + 1
 	elif n == 1 and b == 0:
@@ -290,7 +311,7 @@ def hype(a, b, n):
 		return hype(a, hype(a, b - 1, n), n - 1)
 
 
-def find_indecies(string, sub):
+def find_indecies(string: str, sub: str) -> int:
 	'''Generate the starting indexes of a substing in a string.'''
 	
 	last = -1
@@ -301,10 +322,11 @@ def find_indecies(string, sub):
 		yield last
 
 
-def polynomial_factory(*coefficients):
+def polynomial_factory(*coefficients: float)   \
+	-> ty.Callable[[float], float]:
 	'''Return a polynomial with coefficients passed to it.'''
-	
-	def polynomial(x):
+
+	def polynomial(x: float) -> float:
 		res = 0
 		for index, coeff in enumerate(coefficients):
 			res += coeff * x ** index
@@ -312,7 +334,7 @@ def polynomial_factory(*coefficients):
 	return polynomial
 
 
-def law_cos(a, b, c, C):
+def law_cos(a: float, b: float, c: float, C: float) -> float:
 	'''Return the value of the variable that has the value None.'''
 	
 	if c is None:
@@ -327,7 +349,7 @@ def law_cos(a, b, c, C):
 		return math.acos((a * a + b * b - c * c) / (2 * a * b))
 
 
-def find_match(s):
+def find_match(s: str) -> ty.Tuple[str, str]:
 	'''
 	Split a string into two parts. The first part contains the
 	string until the first time parentheses are completely matched. The
@@ -370,7 +392,7 @@ def find_match(s):
 		raise ValueError("error '%s' is an invalid input." % s)
 
 
-def brackets(s):
+def brackets(s: str) -> bool:
 	'''
 	Return True if the parentheses match, False otherwise.
 	
@@ -395,7 +417,7 @@ def brackets(s):
 	return not x
 
 
-def separate(s, splitter=","):
+def separate(s: str, splitter: str=",") -> ty.Tuple[str, ...]:
 	'''
 	Split up arguments of a function with commas
 	like mod(x, y) or log(x, y) based on where commas that aren't in
@@ -404,9 +426,9 @@ def separate(s, splitter=","):
 	>>> separate("5, 6 , (4, 7)")
 	('5', ' 6 ', ' (4, 7)')
 	'''
-	
+
 	terms = s.split(splitter)
-	
+
 	new_terms = []
 	middle = False
 	term = ""
@@ -424,7 +446,7 @@ def separate(s, splitter=","):
 	return tuple(new_terms)
 
 
-def sum_multiples(max, factors):
+def sum_multiples(max: int, factors: ty.Iterable[int]) -> int:
 	'''Sum the multiples of the factors that are less than max then
 	return the value.'''
 	
@@ -439,15 +461,21 @@ def sum_multiples(max, factors):
 	return sum(multiples)
 
 
-def sort_by_length(a, b):
+def sort_by_length(
+	a: ty.Sequence,
+	b: ty.Sequence) -> ty.Tuple[
+		ty.Sequence,
+		ty.Sequence]:
 	'''Return the input as a tuple sorted with shortest items first.'''
-	
+
 	if len(a) > len(b):
 		return(b, a)
 	return(a, b)
 
 
-def list_union(n, m):
+def list_union(
+	n: ty.List[ty.Any],
+	m: ty.List[ty.Any]) -> ty.List[ty.Any]:
 	'''Return the smallest list that both lists are subsets of.'''
 	
 	n, m = sort_by_length(n, m)
@@ -460,7 +488,7 @@ def list_union(n, m):
 	return m
 
 
-def lcm(a, b):
+def lcm(a: int, b: int) -> int:
 	'''Find the lowest common multiple of two numbers.'''
 	
 	alist = factorize(a)
@@ -469,7 +497,7 @@ def lcm(a, b):
 	return functools.reduce(lambda a, b: a * b, list_union(alist, blist))
 
 
-def detect_palindrome(n):
+def detect_palindrome(n: ty.Any) -> bool:
 	'''Return True if the string form of an object is a palindrome'''
 	
 	n = str(n)
@@ -478,26 +506,30 @@ def detect_palindrome(n):
 
 
 def find_largest_adjacent_product(digits, number):
-	'''Return the largest number which can be created by multipling adjacent digits together.'''
-	
+	'''Return the largest number which can be created by multipling
+	adjacent digits together.'''
+
+	# I think something is wrong with the argument names
 	t = 0
 	for i in range(len(number) + 1 - digits):
-		n = functools.reduce(lambda a, b: int(a) * int(b), tuple(number[i:i + digits]))
+		n = functools.reduce(
+			lambda a, b: int(a) * int(b),
+			tuple(number[i:i + digits]))
 		if n > t:
 			t = n
 			d = number[i:i + digits]
 	return t, d
 
 
-def check_equal(iterator):
+def check_equal(iterator: ty.Iterable) -> bool:
 	'''Check if all elements of a list are equal.'''
-	
+
 	return len(set(iterator)) <= 1 # content must be hashable
 
 
-def convert_to_dict(lst):
+def convert_to_dict(lst: ty.Iterable) -> ty.Dict[ty.Any, int]:
 	'''Convert to dictonary with elemnts as keys and count as value.'''
-	
+
 	d = {}
 	for i in lst:
 		if i in d:
@@ -507,18 +539,18 @@ def convert_to_dict(lst):
 	return d
 
 
-def sum_digits(n):
+def sum_digits(n: int) -> int:
 	'''Sum the digits of a number.'''
 
 	digits = list(str(n))
 	return sum(map(lambda x: int(x), digits))
 
 
-def collaspe_frac(it):
-	
+def collaspe_frac(it: ty.Iterable[float]) -> fractions.Fraction:
+
 	x = fractions.Fraction(0)
 	for count, val in enumerate(reversed(it)):
-		
+
 		if count == len(it) - 1:
 			return val + x
 
@@ -528,10 +560,9 @@ def collaspe_frac(it):
 			x = 1 / (val + x)
 
 
-def check_prime(n):
+def check_prime(n: int) -> bool:
 	'''Return True if a number is prime.'''
 	
-
 	if n == 2:
 		return True
 	elif not n%2:
@@ -548,7 +579,7 @@ def check_prime(n):
 	return True
 
 
-def totient(n):
+def totient(n: int) -> int:
     result = n
     i = 2
     while i * i <= n:
@@ -567,7 +598,7 @@ dict = {
 }
 
 
-def longest(s, c):
+def longest(s: str, c: str) -> int:
 	'''Find how many copies of c are at the begining of s.
 	Assumes c is a single character.'''
 
@@ -579,7 +610,7 @@ def longest(s, c):
 			return count - 1
 
 
-def roman_2_int(s):
+def roman_2_int(s: str) -> int:
 	'''Convert a Roman numeral to an int.'''
 	
 	total = 0
@@ -605,11 +636,11 @@ def roman_2_int(s):
 		return total + roman_2_int(s[count:])
 
 
-def int_2_roman(n):
+def int_2_roman(n: int) -> str:
 	'''Convert and integer to a Roman numeral.'''
-	
+
 	s = ""
-	
+
 	while n >= 1000:
 		s += "M"
 		n -= 1000
@@ -652,11 +683,13 @@ def int_2_roman(n):
 	return s
 
 
-def reduce_roman(s):
+def reduce_roman(s: str) -> str:
 	return int_2_roman(roman_2_int(s))
 
 
-def sortby(somelist, n):
+def sortby(
+	somelist: ty.Iterable[ty.Iterable],
+	n: int) -> list:
 	'''Sort a list by its nth element.'''
 
 	nlist = [(x[n], x) for x in somelist]
@@ -664,9 +697,9 @@ def sortby(somelist, n):
 	return [val for (key, val) in nlist]
 
 
-def primes():
+def primes() -> ty.Iterable[int]:
 	'''Generate a list of primes.'''
-	
+
 	count = 3
 	yield 2
 	while 1:
@@ -675,9 +708,9 @@ def primes():
 		count += 2
 
 
-def factor(n):
+def factor(n: int) -> ty.Set[int]:
 	'''Return a list of all factors of n.'''
-	
+
 	factors = set()
 	for i in range(1, int(n ** .5) + 1):
 		if not n % i:
@@ -686,9 +719,9 @@ def factor(n):
 	return factors
 
 
-def triangle():
+def triangle() -> ty.Iterable[int]:
 	'''Return the triangle numbers.'''
-	
+
 	t = 1
 	c = 2
 	while 1:
@@ -697,12 +730,12 @@ def triangle():
 		c += 1
 
 
-def join_format(s, iterable):
-	
+def join_format(s: str, iterable: ty.Iterable[str]) -> str:
+
 	return ''.join(map(lambda a: s.format(a), iterable))
 
 
-def isonly(n, only):
+def isonly(n: ty.Iterable, only: ty.Iterable) -> bool:
 	'''Check if n is comprized solely of elements found in only.'''
 
 	for i in n:
