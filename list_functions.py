@@ -299,16 +299,18 @@ def cosh(x: float) -> float:
 def hype(a: float, b: float, n: int) -> float:
 	'''The Hyperoperation sequence implemented recursively.'''
 
-	if n == 0:
-		return b + 1
-	elif n == 1 and b == 0:
-		return a
-	elif n == 2 and b == 0:
-		return 0
-	elif n >= 3 and b == 0:
-		return 1
-	else:
-		return hype(a, hype(a, b - 1, n), n - 1)
+	while True:
+		if n == 0:
+			return b + 1
+		elif n == 1 and b == 0:
+			return a
+		elif n == 2 and b == 0:
+			return 0
+		elif n >= 3 and b == 0:
+			return 1
+		else:
+			b = hype(a, b - 1, n)
+			n -= 1
 
 
 def find_indecies(string: str, sub: str) -> int:
@@ -772,5 +774,3 @@ def split_into_tokens(s):
 		tokens.append(token_info)
 	file.close()
 	return tokens
-
-
