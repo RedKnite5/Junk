@@ -124,9 +124,12 @@ def factorial(n: int) -> int:
 	'''Return the factorial of n.'''
 
 	ans = 1
-	for i in range(1, n + 1):
-		ans = ans * i
-	return ans
+	try:
+		for i in range(1, n + 1):
+			ans = ans * i
+		return ans
+	except TypeError:
+		raise TyperError("n must be an int not {}".format(type(n)))
 
 	
 def permute(n: int, r: int) -> int:
@@ -137,7 +140,7 @@ def permute(n: int, r: int) -> int:
 	else:
 		return factorial(n) // factorial(n - r)
 
-	
+
 def choose(n: int, r: int) -> int:
 	'''Return n choose r.'''
 
@@ -148,7 +151,8 @@ def choose(n: int, r: int) -> int:
 
 
 def rand_str(
-	length: int=4, charset: ty.Iterable="abcdefghijklmnopqrstuvwxyz") \
+	length: int=4,
+	charset: ty.Iterable="abcdefghijklmnopqrstuvwxyz") \
 	-> str:
 	'''Return a random string of length length from the character set
 	charset.'''
@@ -157,21 +161,6 @@ def rand_str(
 		charset[random.randint(
 			0,
 			len(charset) - 1)] for i in range(length))
-
-
-def start_substr(substr: str, string: str) -> int:
-	'''Find index of first occurance of substr in string.'''
-
-	if substr not in string:
-		raise ValueError("Substring not in string.")
-	for i in range(len(string)):
-		if substr[0] == string[i]:
-			start = True
-			for j in range(len(substr)):
-				if substr[j] != string[i + j]:
-					start = False
-			if start == True:
-				return i
 
 
 def find_center(item) -> ty.Tuple[float, float]:
@@ -753,7 +742,7 @@ class DummyFile(io.IOBase):
 		return self.content.encode("utf-8")
 
 
-def split_into_tokens(s):
+def split_into_tokens(s: str) -> ty.List:
 	'''Split a string into tokens.'''
 	
 	if s[-1] != "\n":
@@ -774,3 +763,30 @@ def split_into_tokens(s):
 		tokens.append(token_info)
 	file.close()
 	return tokens
+
+def distance(
+	p1: ty.Tuple[float, ...],
+	p2: ty.Tuple[float, ...])\
+	-> float:
+	'''Find the distance between two points.'''
+
+	t = 0
+	for n, n2 in zip(p1, p2):
+		t += (n - n2) ** 2
+	return t ** .5
+
+
+def colinear(
+	p1: ty.Tuple[float, ...],
+	p2: ty.Tuple[float, ...],
+	p3: ty.Tuple[float, ...]) -> bool:
+	'''Return if the three points are colinear.'''
+
+	d1 = distance(p1, p2)
+	d2 = distance(p1, p3)
+	d3 = distance(p2, p3)
+	ds = (d1, d2, d3)
+	sd = sorted(ds)
+	if sd[0] + sd[1] == sd[2]:
+		return True
+	return False
