@@ -590,15 +590,16 @@ dict = {
 
 
 def longest(s: str, c: str) -> int:
-	'''Find how many copies of c are at the begining of s.
-	Assumes c is a single character.'''
+	'''Return the number of times c occurs at the start of s. c must be
+	a single character.'''
 
-	count = 1
-	while 1:
-		if s[:count] == c * count:
+	count = 0
+	try:
+		while c == s[count]:
 			count += 1
-		else:
-			return count - 1
+	except IndexError:
+		pass
+	return count
 
 
 def roman_2_int(s: str) -> int:
