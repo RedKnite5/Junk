@@ -1,7 +1,0 @@
-#   python stuff.py
-
-a = None
-
-
-if a is not None:
-	print("not None")
