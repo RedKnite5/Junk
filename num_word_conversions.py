@@ -85,40 +85,48 @@ higher = {
 
 
 def num_2_word(num, and_in=True):
+	ans = ""
+	end = ""
+	t = str(num)
+	
 	if str(num).startswith("-"):
-		return f"negative {num_2_word(str(num)[1:])}"
+		ans += "negative "
+		start_type = type(num)
+		num = start_type(t[1:])
 	if "." in str(num):
-		return f"{num_2_word(str(num).split('.')[0])} point {' '.join(map(lambda a: digits[a], list(str(num).split('.')[1])))}"
+		end += " point " + " ".join(map(lambda a: digits[a], list(str(num).split(".")[1])))
 	
 	num = int(num)
 	t = str(num)
-	length = len(t)
+	length = len(str(num))
 	r = (length - 1) // 3
 	
 	if length == 1:
 		if t == "0":
-			return "zero"
-		return digits[t]
+			ans += "zero"
+		ans += digits[t]
 	
 	elif length == 2:
 		if t[0] == "1":
-			return teens[t[1]]
-		return f"{tens[t[0]]} {digits[t[1]]}"
+			ans += teens[t[1]]
+		ans += f"{tens[t[0]]} {digits[t[1]]}"
 	
 	elif length == 3:
-		ans = f"{digits[t[0]]} hundred"
+		ans += f"{digits[t[0]]} hundred"
 		if t[1:] == "00":
-			return ans
+			pass
 		else:
 			if and_in:
-				return ans + f" and {num_2_word(t[1:])}"
+				ans += f" and {num_2_word(t[1:])}"
 			else:
-				return ans + f" {num_2_word(t[1:])}"
+				ans += f" {num_2_word(t[1:])}"
 	
 	elif r > 0:
 		chunks = chunk(t)[::-1]
 		zipped = list(zip(chunks, values(higher)))[::-1]
-		return " ".join(f"{num_2_word(i[0])} {i[1]}" for i in zipped if i[0] != "000")
+		ans += " ".join(f"{num_2_word(i[0])} {i[1]}" for i in zipped if i[0] != "000")
+	
+	return ans + end
 
 
-print(num_2_word(-33.251))
+print(num_2_word(-.251))
