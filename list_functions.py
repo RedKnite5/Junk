@@ -839,3 +839,10 @@ def mod_exp(a, b, c):
 			product *= powers[i]
 	
 	return product % c
+
+
+def invert_dict(d):
+	new = {}
+	for i in d.keys():
+		new[d[i]] = i
+	return new
