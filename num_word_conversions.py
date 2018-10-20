@@ -1,5 +1,7 @@
 # num_word_conversions.py
 from math import ceil
+import re
+
 
 def invert_dict(d):
 	new = {}
@@ -7,11 +9,13 @@ def invert_dict(d):
 		new[d[i]] = i
 	return new
 
+
 def values(d):
 	val = []
 	for i in d.keys():
 		val.append(d[i])
 	return val
+
 
 def chunk(s, n=3):
 	ans = []
@@ -24,6 +28,17 @@ def chunk(s, n=3):
 		except IndexError:
 			ans.append(s[:-(i - 1) * n])
 	return ans[::-1]
+
+
+def replace(l, d):
+	ans = []
+	for i, v in enumerate(l):
+		try:
+			ans.append(d[v])
+		except KeyError:
+			ans.append(l[i])
+	return ans
+
 
 digits = {
 	"0": "",
@@ -80,7 +95,26 @@ higher = {
 	33: "decillion",
 	36: "undecillion",
 	39: "duodecillion",
-	42: "tredecillion"
+	42: "tredecillion",
+	45: "quattuordecillion",
+	48: "quindecillion",
+	51: "sexdecillion",
+	54: "septemdecillion",
+	57: "octodecillion",
+	60: "novemdecillion",
+	63: "vigintillion",
+	66: "unvigintillion",
+	69: "duovigintillion",
+	72: "trevigintillion",
+	75: "quattuorvigintillion",
+	78: "quinvigintillion",
+	81: "sexvigintillion",
+	84: "septvigintillion",
+	87: "octovigintillion",
+	90: "nonvigintillion",
+	93: "trigintillion",
+	96: "untrigintillion",
+	99: "duotrigintillion"
 }
 
 
@@ -101,15 +135,20 @@ def num_2_word(num, and_in=True):
 	length = len(str(num))
 	r = (length - 1) // 3
 	
+	if length > 101:
+		raise ValueError("Can not accept inputs larger that 10^101")
+	
 	if length == 1:
 		if t == "0":
 			ans += "zero"
-		ans += digits[t]
+		else:
+			ans += digits[t]
 	
 	elif length == 2:
 		if t[0] == "1":
 			ans += teens[t[1]]
-		ans += f"{tens[t[0]]} {digits[t[1]]}"
+		else:
+			ans += f"{tens[t[0]]} {digits[t[1]]}"
 	
 	elif length == 3:
 		ans += f"{digits[t[0]]} hundred"
@@ -129,4 +168,23 @@ def num_2_word(num, and_in=True):
 	return ans + end
 
 
-print(num_2_word(-.251))
+def text_2_num(text):
+	text = text.lower()
+	words = re.split(r"\W+", text)
+	words_digits = replace(words, inv_digits)
+	print(words_digits)
+	
+	number = []
+	for i in words_digits:
+		if i == "hundred":
+			number[-1] *= 100
+		elif i in inv_teens:
+			number.append(inv_teens[i])
+		else:
+			number.append(i)
+	
+	print(number)
+
+
+if __name__ == "__main__":
+	print(text_2_num("twenty three"))
