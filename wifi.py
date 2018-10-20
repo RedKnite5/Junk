@@ -15,11 +15,13 @@ ET.register_namespace("", r"http://www.microsoft.com/networking/WLAN/profile/v1"
 name = "san lorenzo"
 
 def init_profile(name):
-	tree = ET.parse(r"C:\Users\Max\Documents\Wi-Fi-thames.xml")
+	tree = ET.parse(r"C:\Users\Max\Documents\Wi-Fi-default.xml")
 	root = tree.getroot()
 	root[0].text = name
 	root[1][0][1].text = name
 	root[1][0][0].text = "".join(list(map(lambda a: hex(ord(a))[2:], name)))
+	root[3].text = "manual"
+	root[4][0][1][1].text = "false"
 	tree.write(r"C:\Users\Max\Documents\Wi-Fi-profile.xml")
 
 
@@ -35,15 +37,15 @@ def gen_pass():
 def check_connected(name):
 	output = check_output("netsh wlan show interfaces")
 
-	while b"authenticating" in output:
-		time.sleep(.5)
-		output = check_output("netsh wlan show interfaces")
+	#while b"authenticating" in output:
+	#	time.sleep(.5)
+	#	output = check_output("netsh wlan show interfaces")
 
-	if b"Profile" not in output:
+	if b": connected" not in output:
 		return False
 	else:
 		return True
-	
+
 	output = output.split(b"\n")
 
 def connect(password):
@@ -60,23 +62,24 @@ def connect(password):
 	else:
 		raise ConnectionRefusedError
 
+#init_profile(name)
+if __name__ == "__main__":
+	success = False
+	try:
+		run(rf'netsh wlan connect "{name}"')
 
-success = False
-try:
-	run(rf'netsh wlan connect "{name}"')
-	
-	if not check_connected(name):
-		raise ConnectionRefusedError
-	success = True
-	
-except (CalledProcessError, ConnectionRefusedError) as e:
-	init_profile(name)
-	for i in gen_pass():
-		try:
-			connect(i)
-			success = True
-			break
-		except (ConnectionRefusedError, CalledProcessError) as e:
-			continue
+		if not check_connected(name):
+			raise ConnectionRefusedError
+		success = True
 
-print(success)
+	except (CalledProcessError, ConnectionRefusedError) as e:
+		init_profile(name)
+		for i in gen_pass():
+			try:
+				connect(i)
+				success = True
+				break
+			except (ConnectionRefusedError, CalledProcessError) as e:
+				continue
+
+	print(success)
