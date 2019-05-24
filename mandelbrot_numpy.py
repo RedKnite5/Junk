@@ -8,10 +8,20 @@ from colorsys import hls_to_rgb
 import tkinter as tk
 import time
 
+# Easy
 # PC: with GC 1.2 sec
 # PC: without GC 6.6 sec
+# Laptop: with GC 1.4
+# Laptop: without GC 7.7 sec
 
-w, h = 512, 512
+# Hard
+# PC: with GC 1.2 sec
+# PC: without GC 6.6 sec
+# Laptop: with GC 5.9
+# Laptop: without GC 154.8 sec
+
+
+w, h = 1012, 1012
 
 size = 1
 magnify = 0
@@ -21,7 +31,7 @@ zoom = 10 ** magnify
 w_mult = 4 / w
 h_mult = 4 / h
 
-iterations = 500
+iterations = 3000
 
 
 #@autojit
