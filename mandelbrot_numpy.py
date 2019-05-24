@@ -15,8 +15,8 @@ import time
 # Laptop: without GC 7.7 sec
 
 # Hard
-# PC: with GC 1.2 sec
-# PC: without GC 6.6 sec
+# PC: with GC 5.2 sec
+# PC: without GC 150.6 sec
 # Laptop: with GC 5.9
 # Laptop: without GC 154.8 sec
 
@@ -34,7 +34,7 @@ h_mult = 4 / h
 iterations = 3000
 
 
-#@autojit
+@autojit
 def point(A, B, iterations, zoom, loc):
 	"""Find what color a point on the graph should be."""
 
@@ -64,7 +64,7 @@ def move_point(event):
 	holder = load(iterations, zoom, loc)
 
 
-#@autojit
+@autojit
 def load(iterations, zoom, loc):
 
 	data = np.zeros((h, w, 3), dtype = np.uint8)
