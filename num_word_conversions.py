@@ -122,34 +122,34 @@ def num_2_word(num, and_in=True):
 	ans = ""
 	end = ""
 	t = str(num)
-	
+
 	if str(num).startswith("-"):
 		ans += "negative "
 		start_type = type(num)
 		num = start_type(t[1:])
 	if "." in str(num):
 		end += " point " + " ".join(map(lambda a: digits[a], list(str(num).split(".")[1])))
-	
+
 	num = int(num)
 	t = str(num)
 	length = len(str(num))
 	r = (length - 1) // 3
-	
+
 	if length > 101:
 		raise ValueError("Can not accept inputs larger that 10^101")
-	
+
 	if length == 1:
 		if t == "0":
 			ans += "zero"
 		else:
 			ans += digits[t]
-	
+
 	elif length == 2:
 		if t[0] == "1":
 			ans += teens[t[1]]
 		else:
 			ans += f"{tens[t[0]]} {digits[t[1]]}"
-	
+
 	elif length == 3:
 		ans += f"{digits[t[0]]} hundred"
 		if t[1:] == "00":
@@ -159,12 +159,12 @@ def num_2_word(num, and_in=True):
 				ans += f" and {num_2_word(t[1:])}"
 			else:
 				ans += f" {num_2_word(t[1:])}"
-	
+
 	elif r > 0:
 		chunks = chunk(t)[::-1]
 		zipped = list(zip(chunks, values(higher)))[::-1]
 		ans += " ".join(f"{num_2_word(i[0])} {i[1]}" for i in zipped if i[0] != "000")
-	
+
 	return ans + end
 
 
@@ -173,7 +173,7 @@ def text_2_num(text):
 	words = re.split(r"\W+", text)
 	words_digits = replace(words, inv_digits)
 	print(words_digits)
-	
+
 	number = []
 	for i in words_digits:
 		if i == "hundred":
@@ -182,9 +182,9 @@ def text_2_num(text):
 			number.append(inv_teens[i])
 		else:
 			number.append(i)
-	
+
 	print(number)
 
 
 if __name__ == "__main__":
-	print(text_2_num("twenty three"))
+	print(num_2_word(int(5e44)))

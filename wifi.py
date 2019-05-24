@@ -29,7 +29,7 @@ def init_profile(name):
 
 
 def gen_pass():
-	chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890$@^`,|%;.~()/\{}:?[]=-+_#!"
+	chars = r"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890$@^`,|%;.~()/\{}:?[]=-+_#!"
 	for i in chars:
 		yield f"g98m4Rs{i}"
 		#yield f"GanZAUjy"

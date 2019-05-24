@@ -6,6 +6,10 @@ from numba import autojit
 from cmath import polar
 from colorsys import hls_to_rgb
 import tkinter as tk
+import time
+
+# PC: with GC 1.2 sec
+# PC: without GC 6.6 sec
 
 w, h = 512, 512
 
@@ -20,10 +24,10 @@ h_mult = 4 / h
 iterations = 500
 
 
-@autojit
+#@autojit
 def point(A, B, iterations, zoom, loc):
 	"""Find what color a point on the graph should be."""
-	
+
 	z = 0
 	a = (((A * w_mult) - 2) / zoom) + loc[0]
 	b = (((B * h_mult) - 2) / zoom) + loc[1]
@@ -33,11 +37,11 @@ def point(A, B, iterations, zoom, loc):
 		# function line
 		z = z * z + (a + b * 1j)
 	return(iterations)
-	
+
 def move_point(event):
 	'''Move the focus of the image to where the user has clicked and
 	zoom in.'''
-	
+
 	global iterations, zoom, loc, holder
 	x, y = event.x, event.y
 	x = (((x * w_mult) - 2) / zoom) + loc[0]
@@ -48,13 +52,13 @@ def move_point(event):
 	zoom *= 10
 	iterations = int(iterations * 2)
 	holder = load(iterations, zoom, loc)
-	
 
-@autojit
+
+#@autojit
 def load(iterations, zoom, loc):
-	
+
 	data = np.zeros((h, w, 3), dtype = np.uint8)
-	
+
 	for p in np.ndindex(h, w):
 		value = point(p[0], p[1], iterations, zoom, loc)
 
@@ -74,7 +78,11 @@ root = tk.Tk()
 canvas = tk.Canvas(root, width = w, height = h)
 canvas.pack()
 
+start = time.time()
 holder = load(iterations, zoom, loc)
+print(time.time() - start)
+
+exit()
 
 canvas.bind("<Button 1>", move_point)
 
