@@ -40,6 +40,14 @@ def replace(l, d):
 	return ans
 
 
+def is_num(n):
+	try:
+		int(n)
+		return True
+	except ValueError:
+		return False
+
+
 digits = {
 	"0": "",
 	"1": "one",
@@ -116,6 +124,7 @@ higher = {
 	96: "untrigintillion",
 	99: "duotrigintillion"
 }
+inv_higher = invert_dict(higher)
 
 
 def num_2_word(num, and_in=True):
@@ -177,14 +186,38 @@ def text_2_num(text):
 	number = []
 	for i in words_digits:
 		if i == "hundred":
-			number[-1] *= 100
+			number[-1] = int(number[-1]) * 100
 		elif i in inv_teens:
-			number.append(inv_teens[i])
+			number.append(10 + int(inv_teens[i]))
+		elif i in inv_tens:
+			number.append(int(inv_tens[i]) * 10)
+		elif i in higher:
+			number.append(10 ** int(inv_higher[i]))
 		else:
 			number.append(i)
+<<<<<<< HEAD
 
 	print(number)
 
 
 if __name__ == "__main__":
 	print(num_2_word(int(5e44)))
+=======
+	
+	result = [0]
+	for i in number:
+		try:
+			result[-1] += int(i)
+		except ValueError:
+			if i == "and":
+				continue
+			else:
+				result.append(i)
+				result.append(0)
+				continue
+	print(result)
+
+
+if __name__ == "__main__":
+	print(text_2_num("three hundred and twenty three thousand two hundred and ten"))
+>>>>>>> 4d6fd77aae7098e357cdc75072445da9db483f2b
