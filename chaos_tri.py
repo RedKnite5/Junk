@@ -12,7 +12,7 @@ screen_size = (700, 500)
 
 to_update = []
 
-points = ((10, 10), (10, 490), (690, 490), (690, 10))
+points = ((350, 10), (10, 490), (690, 490))
 time = 2
 size = 1
 
@@ -43,7 +43,7 @@ while count < 200:
 	
 	for i in range(100):
 		chosen = rand.choice(points)
-		p = find_new(p, chosen, 17/32)
+		p = find_new(p, chosen, 1/2)
 		pg.draw.circle(screen, black, p, size, 0)
 		to_update.append((p[0] - size, p[1] - size, 2*size, 2*size))
 		
@@ -52,4 +52,4 @@ while count < 200:
 	pg.time.wait(20)
 	
 	count += 1
-pg.time.wait(2000)
+pg.time.wait(20000)
