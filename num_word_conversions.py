@@ -195,15 +195,7 @@ def text_2_num(text):
 			number.append(10 ** int(inv_higher[i]))
 		else:
 			number.append(i)
-<<<<<<< HEAD
 
-	print(number)
-
-
-if __name__ == "__main__":
-	print(num_2_word(int(5e44)))
-=======
-	
 	result = [0]
 	for i in number:
 		try:
@@ -220,4 +212,3 @@ if __name__ == "__main__":
 
 if __name__ == "__main__":
 	print(text_2_num("three hundred and twenty three thousand two hundred and ten"))
->>>>>>> 4d6fd77aae7098e357cdc75072445da9db483f2b
