@@ -7,6 +7,7 @@ from cmath import polar
 from colorsys import hls_to_rgb
 import tkinter as tk
 import time
+import math as m
 
 # Easy
 # PC: with GC 1.2 sec
@@ -21,7 +22,7 @@ import time
 # Laptop: without GC 154.8 sec
 
 
-w, h = 1012, 1012
+w, h = 512, 512
 
 size = 1
 magnify = 0
@@ -31,7 +32,7 @@ zoom = 10 ** magnify
 w_mult = 4 / w
 h_mult = 4 / h
 
-iterations = 3000
+iterations = 500
 
 
 @autojit
@@ -75,7 +76,8 @@ def load(iterations, zoom, loc):
 		if value == iterations:
 			color = (0, 0, 0)
 		else:
-			color = hls_to_rgb(value / iterations, 100, 1)
+			adjusted_value = m.log(value / iterations + 1 / (m.e - 1)) + m.log(m.e - 1)
+			color = hls_to_rgb(adjusted_value, 100, 1)
 
 		data[p[1], p[0]] = color
 	photo = ImageTk.PhotoImage(Image.fromarray(data, "RGB"))
@@ -91,8 +93,6 @@ canvas.pack()
 start = time.time()
 holder = load(iterations, zoom, loc)
 print(time.time() - start)
-
-exit()
 
 canvas.bind("<Button 1>", move_point)
 

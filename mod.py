@@ -23,7 +23,8 @@ if __name__ == "__main__":
 		"gensim", "pygame", "pyglet", "seaborn", "keyboard",
 		"envelopes", "arrow", "plotly", "sqlalchemy", "twisted",
 		"inspect", "decimal", "collections", "doctest", "pip",
-		"subprocess", "os", "importlib", "aiohttp", "docopt"]
+		"subprocess", "os", "importlib", "aiohttp", "docopt",
+		"regex"]
 
 	modules_list = {}
 
@@ -42,6 +43,13 @@ if __name__ == "__main__":
 		except ModuleNotFoundError:
 			failed_imports.append(i)
 			print("Could not import %s" % i)
+	
+	try:
+		import cv2
+	except:
+		print("Could not import cv2")
+		run("pip3 install opencv-python", shell = True)
+		
 
 	# import graphics             # doesn't work on either
 print(failed_imports)
