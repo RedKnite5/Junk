@@ -1,12 +1,12 @@
 #  video.py
 
-import cv2
+import cv2, math
 import numpy as np
 from cv2 import VideoWriter, VideoWriter_fourcc, VideoCapture
 
 
-width = 1280
-height = 720
+width = 300
+height = 300
 FPS = 44
 seconds = 15
 
@@ -40,17 +40,34 @@ def person(frame, loc):
 	cv2.circle(frame, (loc[0], loc[1] - 150), 50, (0, 0, 0), 1)
 
 
-for i in range(0, FPS * seconds, 2):
-	frame = np.zeros((height, width, 3), dtype=np.uint8)
-	
+def terrain(frame):
 	cv2.rectangle(frame, (0, 0), (width, height), (255, 100, 100), -1)
 	cv2.rectangle(frame, (0, 500), (width, height), (19,69,139), -1)
+
+
+def dist_proto(y, x, z):
+	#print("y: ", y)
+	#print("x: ", x)
+	#print("z: ", z)
 	
-	poly = make_grass()
-	pts = np.array(poly, np.int32)
-	pts = pts.reshape((-1, 1, 2))
-	cv2.fillPoly(frame, [pts], (0, 99, 49))
-	person(frame, (500, 250))
+	if z > 0:
+		return 0
+	
+	return int(math.sin(((x*x+y*y)*.5)/9)*255)
+
+dist = np.vectorize(dist_proto)
+
+for i in range(0, FPS * seconds, 2):
+	
+	#frame = np.zeros((height, width, 3), dtype=np.uint8)
+	frame = np.array(np.fromfunction(dist, (height, width, 3), dtype=np.uint8))
+	print(frame.shape)
+	#terrain(frame)
+	#poly = make_grass()
+	#pts = np.array(poly, np.int32)
+	#pts = pts.reshape((-1, 1, 2))
+	#cv2.fillPoly(frame, [pts], (0, 99, 49))
+	#person(frame, (500, 250))
 
 	
 	video.write(frame)
