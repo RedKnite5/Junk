@@ -1,0 +1,22 @@
+(<code object func at 0x00000182AE0690C0, file "C:\Users\Max\Documents\Python\Junk\numpy_stuff.py", line 37>,
+ {'__doc__': 'code(argcount, kwonlyargcount, nlocals, stacksize, flags, '
+             'codestring,\n'
+             '      constants, names, varnames, filename, name, firstlineno,\n'
+             '      lnotab[, freevars[, cellvars]])\n'
+             '\n'
+             'Create a code object.  Not for the faint of heart.',
+  'co_argcount': 1,
+  'co_cellvars': (),
+  'co_code': b't\x00|\x00\x83\x01\x01\x00d\x01S\x00',
+  'co_consts': (None, 2),
+  'co_filename': 'C:\\Users\\Max\\Documents\\Python\\Junk\\numpy_stuff.py',
+  'co_firstlineno': 37,
+  'co_flags': 67,
+  'co_freevars': (),
+  'co_kwonlyargcount': 0,
+  'co_lnotab': b'\x00\x01\x08\x01',
+  'co_name': 'func',
+  'co_names': ('print',),
+  'co_nlocals': 1,
+  'co_stacksize': 2,
+  'co_varnames': ('var',)})

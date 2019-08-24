@@ -9,6 +9,8 @@ if __name__ == "__main__":
 
 	import pkg_resources
 	from subprocess import run
+    
+    run("python -m pip install --upgrade pip --user", shell=True)
 
 	packages = [dist.project_name for dist in pkg_resources.working_set]
 	run("pip3 install --upgrade " + ' '.join(packages), shell=True)
