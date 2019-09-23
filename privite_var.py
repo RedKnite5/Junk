@@ -1,12 +1,11 @@
-#   stuff.py
-# cd C:\Users\Max\Documents\Python\ReCalc
-# cd C:\Users\Max\Documents\Python\Junk
+#   privite_var.py
 
-import sys
+
+from pprint import pprint
 import inspect
 
 
-
+'''
 class A(object):
 	__slots__ = ["__a"]
 
@@ -47,15 +46,35 @@ class A(object):
 		else:
 			object.__setattr__(self, attr, value)
 	
-t = A()
-
-print(t.inc())
-
-print(inspect.getattr_static(t, "_A__a"))
-
-print(object.__getattribute__(t, "_A__a"))
+'''
 
 
+class PriviteDict(dict):
+	import inspect
+	
+	def __setitem__(self, key, value):
+		frame = inspect.currentframe()
+		info = inspect.getouterframes(frame)
+		for i in info:
+			print("")
+			#pprint(inspect.getframeinfo(i))
+			pprint(inspect.getmembers(i))
+		
+		super().__setitem__(key, value)
+	
+	def __getitem__(self, key):
+		super().__getitem__(key)
+		
+
+class PriviteNamespace(type):
+	
+	def __prepare__(self, name, *bases):
+		return PriviteDict()
 
 
+class Secret(object, metaclass=PriviteNamespace):
+	def __init__(self):
+		self.__num = 231
+		self.pub_num = 10
 
+s = Secret()

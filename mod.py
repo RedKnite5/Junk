@@ -10,10 +10,10 @@ if __name__ == "__main__":
 	import pkg_resources
 	from subprocess import run
     
-    run("python -m pip install --upgrade pip --user", shell=True)
+	run("python -m pip install --upgrade pip --user", shell=True)
 
 	packages = [dist.project_name for dist in pkg_resources.working_set]
-	run("pip3 install --upgrade " + ' '.join(packages), shell=True)
+	run("pip3 install --upgrade " + ' '.join(packages) + " --user", shell=True)
 
 	libs = ["sys", "math", "random", "pickle", "sympy", "hashlib",
 		"time", "tkinter", "itertools", "tensorflow", "cx_Freeze",
@@ -26,7 +26,7 @@ if __name__ == "__main__":
 		"envelopes", "arrow", "plotly", "sqlalchemy", "twisted",
 		"inspect", "decimal", "collections", "doctest", "pip",
 		"subprocess", "os", "importlib", "aiohttp", "docopt",
-		"regex"]
+		"regex", "curses"]
 
 	modules_list = {}
 
@@ -50,19 +50,26 @@ if __name__ == "__main__":
 		import cv2
 	except:
 		print("Could not import cv2")
-		run("pip3 install opencv-python", shell = True)
+		run("pip3 install opencv-python --user", shell = True)
 		
 
 	# import graphics             # doesn't work on either
 print(failed_imports)
 
+failed_installs = []
 for i in failed_imports:
 	try:
-		run("pip3 install " + i, shell = True)
+		if i == "curses":
+			run("pip3 install windows-curses --user", shell=True)
+		elif i == "PIL":
+			run("pip3 install pillow --user", shell=True)
+		else:
+			run("pip3 install " + i + " --user", shell=True)
 	except:
-		pass
+		failed_installs.append(i)
 
 print("Done")
+print("Could not install: " + str(failed_installs))
 r'''
 cd C:\Users\Max\Documents\Python\Calculator
 cd C:\Users\Max\Dropbox\Python
