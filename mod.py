@@ -26,7 +26,7 @@ if __name__ == "__main__":
 		"envelopes", "arrow", "plotly", "sqlalchemy", "twisted",
 		"inspect", "decimal", "collections", "doctest", "pip",
 		"subprocess", "os", "importlib", "aiohttp", "docopt",
-		"regex", "curses"]
+		"regex", "curses", "flask", "cv2"]
 
 	modules_list = {}
 
@@ -45,31 +45,34 @@ if __name__ == "__main__":
 		except ModuleNotFoundError:
 			failed_imports.append(i)
 			print("Could not import %s" % i)
+
+
+		# import graphics             # doesn't work on either
+	print(failed_imports)
+
+	failed_installs = []
+	for i in failed_imports:
+		try:
+			if i == "curses":
+				pro = run("pip3 install windows-curses --user", shell=True)
+			elif i == "PIL":
+				pro = run("pip3 install pillow --user", shell=True)
+			elif i == "cv2":
+				pro = run("pip3 install  opencv-python --user", shell=True)
+			else:
+				pro = run("pip3 install " + i + " --user", shell=True)
+			
+			if pro.returncode != 0:
+				failed_installs.append(i)
+		except:
+			failed_installs.append(i)
+
+	print("Done")
+	print("Could not install: " + str(failed_installs))
+	# ['tensorflow', 'cx_Freeze', 'pylab', 'numba',
+	# 'keras', 'matplotlib', 'seaborn', 'cv2']
 	
-	try:
-		import cv2
-	except:
-		print("Could not import cv2")
-		run("pip3 install opencv-python --user", shell = True)
-		
 
-	# import graphics             # doesn't work on either
-print(failed_imports)
-
-failed_installs = []
-for i in failed_imports:
-	try:
-		if i == "curses":
-			run("pip3 install windows-curses --user", shell=True)
-		elif i == "PIL":
-			run("pip3 install pillow --user", shell=True)
-		else:
-			run("pip3 install " + i + " --user", shell=True)
-	except:
-		failed_installs.append(i)
-
-print("Done")
-print("Could not install: " + str(failed_installs))
 r'''
 cd C:\Users\Max\Documents\Python\Calculator
 cd C:\Users\Max\Dropbox\Python

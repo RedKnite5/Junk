@@ -1,22 +1,29 @@
-(<code object func at 0x00000182AE0690C0, file "C:\Users\Max\Documents\Python\Junk\numpy_stuff.py", line 37>,
- {'__doc__': 'code(argcount, kwonlyargcount, nlocals, stacksize, flags, '
-             'codestring,\n'
-             '      constants, names, varnames, filename, name, firstlineno,\n'
-             '      lnotab[, freevars[, cellvars]])\n'
-             '\n'
-             'Create a code object.  Not for the faint of heart.',
-  'co_argcount': 1,
-  'co_cellvars': (),
-  'co_code': b't\x00|\x00\x83\x01\x01\x00d\x01S\x00',
-  'co_consts': (None, 2),
-  'co_filename': 'C:\\Users\\Max\\Documents\\Python\\Junk\\numpy_stuff.py',
-  'co_firstlineno': 37,
-  'co_flags': 67,
-  'co_freevars': (),
-  'co_kwonlyargcount': 0,
-  'co_lnotab': b'\x00\x01\x08\x01',
-  'co_name': 'func',
-  'co_names': ('print',),
-  'co_nlocals': 1,
-  'co_stacksize': 2,
-  'co_varnames': ('var',)})
+  2           0 LOAD_BUILD_CLASS
+              2 LOAD_CONST               0 (<code object MyDict at 0x0000017922D4B5B0, file "<disassembly>", line 2>)
+              4 LOAD_CONST               1 ('MyDict')
+              6 MAKE_FUNCTION            0
+              8 LOAD_CONST               1 ('MyDict')
+             10 LOAD_NAME                0 (dict)
+             12 CALL_FUNCTION            3
+             14 STORE_NAME               1 (MyDict)
+
+ 27          16 LOAD_BUILD_CLASS
+             18 LOAD_CONST               2 (<code object MyMeta at 0x0000017922D4B710, file "<disassembly>", line 27>)
+             20 LOAD_CONST               3 ('MyMeta')
+             22 MAKE_FUNCTION            0
+             24 LOAD_CONST               3 ('MyMeta')
+             26 LOAD_NAME                2 (type)
+             28 CALL_FUNCTION            3
+             30 STORE_NAME               3 (MyMeta)
+
+ 34          32 LOAD_BUILD_CLASS
+             34 LOAD_CONST               4 (<code object A at 0x0000017922D4BA80, file "<disassembly>", line 34>)
+             36 LOAD_CONST               5 ('A')
+             38 MAKE_FUNCTION            0
+             40 LOAD_CONST               5 ('A')
+             42 LOAD_NAME                3 (MyMeta)
+             44 LOAD_CONST               6 (('metaclass',))
+             46 CALL_FUNCTION_KW         3
+             48 STORE_NAME               4 (A)
+             50 LOAD_CONST               7 (None)
+             52 RETURN_VALUE

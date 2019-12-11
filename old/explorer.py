@@ -133,8 +133,8 @@ class equipment(object):
 		# type, max health, health, damage, armor
 		self.log = {
 		"nothing":[0,0,0,0,0],
-		"bronze dagger":[0,0,5,0],
-		"bronze breastplate":[10,0,0,5]
+		"bronze dagger":[1,0,0,5,0],
+		"bronze breastplate":[2,10,0,0,5]
 		}
 		#weapon, breastplate, helmet, leggings, boots
 		self.equiped = ["nothing","nothing","nothing","nothing","nothing"]
@@ -143,7 +143,7 @@ class equipment(object):
 	def equip(self,ment):
 		ment_stats = self.log[ment]
 		print(ment_stats)
-		for i in range(len(stats)):
+		for i in range(1,len(stats)):
 			stats[i] += ment_stats[i]
 		print(stats)
 		self.equiped =
