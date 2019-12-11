@@ -1,4 +1,0 @@
-This is a test
-Line 2
-now three
-Four lines
