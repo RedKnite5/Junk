@@ -1,3 +1,14 @@
 __pycache__
 nppBackup
 .idea
+links.txt
+stuff_error.txt
+geckodriver.txt
+scraping_profile.txt
+text.txt
+info.txt
+geckodriver.log
+noadd.txt
+
+*.txt
+*.log
