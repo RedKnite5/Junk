@@ -5,14 +5,6 @@ import numpy as np
 from cv2 import VideoWriter, VideoWriter_fourcc, VideoCapture
 
 
-width = 300
-height = 300
-FPS = 44
-seconds = 15
-
-fourcc = VideoWriter_fourcc(*'MP42')
-video = VideoWriter('./noise.avi', fourcc, float(FPS), (width, height))
-
 def make_grass():
 	poly = [(0, 500), (0, 510)]
 	dir = True
@@ -54,14 +46,26 @@ def dist_proto(y, x, z):
 		return 0
 	
 	return int(math.sin(((x*x+y*y)*.5)/9)*255)
+	
+
+
+
+
+width = 300
+height = 300
+FPS = 20
+seconds = 15
+
+fourcc = VideoWriter_fourcc(*'MP42')
+video = VideoWriter('./noise.avi', fourcc, float(FPS), (width, height))
 
 dist = np.vectorize(dist_proto)
 
 for i in range(0, FPS * seconds, 2):
 	
-	#frame = np.zeros((height, width, 3), dtype=np.uint8)
-	frame = np.array(np.fromfunction(dist, (height, width, 3), dtype=np.uint8))
-	print(frame.shape)
+	frame = np.zeros((height, width, 3), dtype=np.uint8)
+	#frame = np.array(np.fromfunction(dist, (height, width, 3), dtype=np.uint8))
+	#print(frame.shape)
 	#terrain(frame)
 	#poly = make_grass()
 	#pts = np.array(poly, np.int32)
@@ -76,7 +80,7 @@ video.release()
 
 video = VideoCapture("noise.avi")
 while video.isOpened():
-	idk, frame = video.read()
+	ret, frame = video.read()
 	cv2.imshow("frame", frame)
 	if cv2.waitKey(1) & 0xFF == ord('q'):
 		break

@@ -26,7 +26,7 @@ if __name__ == "__main__":
 		"envelopes", "arrow", "plotly", "sqlalchemy", "twisted",
 		"inspect", "decimal", "collections", "doctest", "pip",
 		"subprocess", "os", "importlib", "aiohttp", "docopt",
-		"regex", "curses", "flask", "cv2"]
+		"regex", "curses", "flask", "cv2", "networkx"]
 
 	modules_list = {}
 
