@@ -15,9 +15,7 @@ def square_list_multi(x, size):
 if __name__ == "__main__":
 	x = tuple(range(30))
 	
-	times = tuple(map(lambda s: timeit(
-	f"multi(x, {s})", number=10, globals={"x": x, "multi": square_list_multi}),
-	range(4, 12)))
+	
 
 	print(times)
 	

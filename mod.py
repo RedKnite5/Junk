@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
 	import pkg_resources
 	from subprocess import run
-    
+
 	run("python -m pip install --upgrade pip --user", shell=True)
 
 	packages = [dist.project_name for dist in pkg_resources.working_set]
@@ -26,7 +26,8 @@ if __name__ == "__main__":
 		"envelopes", "arrow", "plotly", "sqlalchemy", "twisted",
 		"inspect", "decimal", "collections", "doctest", "pip",
 		"subprocess", "os", "importlib", "aiohttp", "docopt",
-		"regex", "curses", "flask", "cv2", "networkx"]
+		"regex", "curses", "flask", "cv2", "networkx", "rope",
+		"radon", "wily", "coverage", "pycodestyle"]
 
 	modules_list = {}
 
@@ -35,7 +36,6 @@ if __name__ == "__main__":
 		libs.extend(("mahotas", "appJar"))
 
 	if os.name == "posix":
-		libs.extend(("curses",))
 		libs.extend(("enchant",))
 
 	failed_imports = []
@@ -69,14 +69,9 @@ if __name__ == "__main__":
 
 	print("Done")
 	print("Could not install: " + str(failed_installs))
-	# ['tensorflow', 'cx_Freeze', 'pylab', 'numba',
-	# 'keras', 'matplotlib', 'seaborn', 'cv2']
-	
+	# ['tensorflow', 'keras']
 
 r'''
-cd C:\Users\Max\Documents\Python\Calculator
-cd C:\Users\Max\Dropbox\Python
-
 list libraries: help("modules")
 '''
 
