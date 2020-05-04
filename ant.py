@@ -56,7 +56,7 @@ class Map(object):
             self.pos = start.pos
             self.orient = start.orient
         else:
-            self.state = np.zeros((70, 200))
+            self.state = np.zeros((5, 5))
             self.pos = Point(self.state.shape[0] // 2, self.state.shape[1] // 2)
             self.orient = Int4(0)
 
@@ -71,8 +71,20 @@ class Map(object):
             self.pos.x -= 1
         else:
             raise RuntimeError(f"self.orient must be 0, 1, 2, or 3. Not {self.orient}")
-        if self.pos.x < 0 or self.pos.y < 0:
-            raise RuntimeError("out of bounds")
+        if (
+            self.state.shape[1] <= self.pos.x
+            or self.pos.x < 0
+            or self.state.shape[0] <= self.pos.y
+            or self.pos.y < 0
+        ):
+            new_state = np.zeros((self.state.shape[0] * 2, self.state.shape[1] * 2))
+            new_state[
+                    new_state.shape[0] // 4:(new_state.shape[0] * 3) // 4,
+                    new_state.shape[0] // 4:(new_state.shape[0] * 3) // 4
+                    ] = self.state
+            self.state = new_state
+            self.pos.x += new_state.shape[1] // 4
+            self.pos.y += new_state.shape[0] // 4
 
     def __iter__(self):
         return self
@@ -108,10 +120,11 @@ class Map(object):
                 stdscr.addstr("‾" * (screen.state.shape[1] + 2))
                 stdscr.addstr("\n")
                 stdscr.refresh()
+                time.sleep(.01)
 
 
 
 if __name__ == "__main__":
     m = Map()
-    m.display(13000)
+    m.display(1000)
 
