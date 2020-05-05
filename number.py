@@ -69,6 +69,64 @@ class SwitchFracBase(Fraction):
 	def __new__(cls, *args, base=10, **kwargs):
 		if base == 10:
 			return super().__new__(cls, *args, **kwargs)
+		return super().__new__(cls, cls._from_base(*args, base))
+
+	@staticmethod
+	def _from_base(n, base=10):
+		if base <= -1:
+			if base == -1:
+
+				if any(l not in "1_" for l in n):
+					raise ValueError("Can only have '1' and '_' in unary number")
+				else:
+					return n.count("1")
+
+			if "." in n:
+				integer, decimal = n.split(".")
+			else:
+				integer = n
+				decimal = ""
+
+			sign = 1
+			if integer.startswith("-"):
+				integer = integer[1:]
+				sign = -1
+
+			int_part = 0
+			for place, digit in enumerate(reversed(integer)):
+				int_part += int(digit, -base) * base ** place
+
+			dec_part = 0
+			for index, digit in enumerate(decimal):
+				dec_part += float(int(digit, -base)) / base ** (index + 1)
+
+			return sign * (int_part + dec_part)
+
+		if base == 1:
+
+			sign = 1
+			if n.startswith("-"):
+				integer = integer[1:]
+				sign = -1
+
+			if any(l not in "1_" for l in n):
+				raise ValueError("Can only have '1' and '_' in unary number")
+			else:
+				return sign * n.count("1")
+
+		if "." in n:
+			integer, decimal = n.split(".")
+		else:
+			integer = n
+			decimal = ""
+
+		int_part = int(integer, base)
+
+		dec_part = 0
+		for index, digit in enumerate(decimal):
+			dec_part += float(int(digit, base)) / base ** (index + 1)
+
+		return int_part + dec_part
 		
 
 	def __str__(self):
@@ -120,35 +178,6 @@ class SwitchFrac(SwitchFracBase):
 
 
 
-
-def base(n, base=10):
-	if base == 1:
-		if any(l not in "1_" for l in n):
-			raise ValueError("Can only have '1' and '_' in unary number")
-		else:
-			return n.count("1")
-	if "." in n:
-		integer, decimal = n.split(".")
-	else:
-		integer = n
-		decimal = ""
-	int_part = int(integer, base)
-
-	dec_part = 0
-	for index, digit in enumerate(decimal):
-		dec_part += float(int(digit, base)) / base ** (index + 1)
-
-	return int_part + dec_part
-
-def neg_base(n, base):
-	t = 0
-	for place, digit in enumerate(reversed(n)):
-		t += int(digit, base * -1) * base ** place
-	return t
-
 if __name__ == "__main__":
-	x = SwitchFrac(.5)
-	print(x)
-
-	print(neg_base("1111", -2))
-
+	print(SwitchFrac("-191.9", base=-10))
+	print(type(SwitchFrac("191.9", base=-10)))
