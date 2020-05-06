@@ -72,61 +72,51 @@ class SwitchFracBase(Fraction):
 		return super().__new__(cls, cls._from_base(*args, base))
 
 	@staticmethod
-	def _from_base(n, base=10):
-		if base <= -1:
-			if base == -1:
-
-				if any(l not in "1_" for l in n):
-					raise ValueError("Can only have '1' and '_' in unary number")
-				else:
-					return n.count("1")
-
-			if "." in n:
-				integer, decimal = n.split(".")
-			else:
-				integer = n
-				decimal = ""
-
-			sign = 1
-			if integer.startswith("-"):
-				integer = integer[1:]
-				sign = -1
-
-			int_part = 0
-			for place, digit in enumerate(reversed(integer)):
-				int_part += int(digit, -base) * base ** place
-
-			dec_part = 0
-			for index, digit in enumerate(decimal):
-				dec_part += float(int(digit, -base)) / base ** (index + 1)
-
-			return sign * (int_part + dec_part)
-
-		if base == 1:
-
-			sign = 1
-			if n.startswith("-"):
-				integer = integer[1:]
-				sign = -1
-
-			if any(l not in "1_" for l in n):
-				raise ValueError("Can only have '1' and '_' in unary number")
-			else:
-				return sign * n.count("1")
-
+	def _from_base(n, d=None, base=10):
 		if "." in n:
 			integer, decimal = n.split(".")
 		else:
 			integer = n
 			decimal = ""
 
-		int_part = int(integer, base)
+		sign = 1
+		if n.startswith("-"):
+			integer = integer[1:]
+			sign = -1
+		elif n.startswith("+"):
+			integer = integer[1:]
+
+		if base in (1, -1):
+			if any(l not in "1_" for l in integer):
+				raise ValueError("Can only have '1' and '_' in unary number")
+			else:
+				if base == -1:
+					sign = -sign
+				return  sign *integer.count("1")
+
+		sign = 1
+		if integer.startswith("-"):
+			integer = integer[1:]
+			sign = -1
+		elif integer.startswith("+"):
+			integer = integer[1:]
+
+		base_mult = 1
+		if base > 0:
+			int_part = int(integer, base)
+		else:
+			base_mult = -1
+			int_part = 0
+			for place, digit in enumerate(reversed(integer)):
+				int_part += int(digit, -base) * base ** place
 
 		dec_part = 0
 		for index, digit in enumerate(decimal):
-			dec_part += float(int(digit, base)) / base ** (index + 1)
+			dec_part += float(int(digit, base * base_mult)) / base ** (index + 1)
 
 		return int_part + dec_part
+
+
 		
 
 	def __str__(self):
@@ -179,5 +169,6 @@ class SwitchFrac(SwitchFracBase):
 
 
 if __name__ == "__main__":
-	print(SwitchFrac("-191.9", base=-10))
-	print(type(SwitchFrac("191.9", base=-10)))
+	print(SwitchFrac("2", "11", base=3))
+
+
