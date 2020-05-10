@@ -82,7 +82,7 @@ div {
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   animation-name: rainbow;
-  animation-duration: 4s;
+  animation-duration: .4s;
   animation-iteration-count: infinite;
 }
 

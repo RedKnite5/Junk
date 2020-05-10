@@ -14,3 +14,5 @@ with open("scrollingRainbowTextKeyframe.txt", "w+") as file:
 	file.write("@keyframes rainbow {\n")
 	file.write(key)
 	file.write("}")
+
+
