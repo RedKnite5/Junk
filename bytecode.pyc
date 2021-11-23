@@ -1,0 +1,155 @@
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (None)
+              4 IMPORT_NAME              0 (ctypes)
+              6 STORE_NAME               0 (ctypes)
+
+  3           8 LOAD_CONST               2 (<code object deref at 0x0000019ABCB6AA80, file "mem_fuckery.py", line 3>)
+             10 LOAD_CONST               3 ('deref')
+             12 MAKE_FUNCTION            0
+             14 STORE_NAME               1 (deref)
+
+  7          16 LOAD_CONST               4 (<code object swap at 0x0000019ABCB6AB30, file "mem_fuckery.py", line 7>)
+             18 LOAD_CONST               5 ('swap')
+             20 MAKE_FUNCTION            0
+             22 STORE_NAME               2 (swap)
+
+ 15          24 LOAD_NAME                2 (swap)
+             26 LOAD_CONST               6 (29)
+             28 LOAD_CONST               7 (100)
+             30 CALL_FUNCTION            2
+             32 POP_TOP
+
+ 17          34 LOAD_CONST               6 (29)
+             36 STORE_NAME               3 (x)
+
+ 18          38 LOAD_NAME                4 (print)
+             40 LOAD_CONST               8 ('x=29')
+             42 CALL_FUNCTION            1
+             44 POP_TOP
+
+ 19          46 LOAD_NAME                4 (print)
+             48 LOAD_CONST               9 ('x * 2=')
+             50 LOAD_NAME                3 (x)
+             52 LOAD_CONST              10 (2)
+             54 BINARY_MULTIPLY
+             56 FORMAT_VALUE             2 (repr)
+             58 BUILD_STRING             2
+             60 CALL_FUNCTION            1
+             62 POP_TOP
+
+ 20          64 LOAD_NAME                4 (print)
+             66 LOAD_CONST              11 ('20 + 9=')
+             68 LOAD_CONST               6 (29)
+             70 FORMAT_VALUE             2 (repr)
+             72 BUILD_STRING             2
+             74 CALL_FUNCTION            1
+             76 POP_TOP
+
+ 21          78 LOAD_NAME                4 (print)
+             80 LOAD_CONST              12 ('1_000_000=')
+             82 LOAD_CONST              13 (1000000)
+             84 FORMAT_VALUE             2 (repr)
+             86 BUILD_STRING             2
+             88 CALL_FUNCTION            1
+             90 POP_TOP
+
+ 22          92 LOAD_NAME                4 (print)
+             94 LOAD_CONST              14 ('50 * 2=')
+             96 LOAD_CONST               7 (100)
+             98 FORMAT_VALUE             2 (repr)
+            100 BUILD_STRING             2
+            102 CALL_FUNCTION            1
+            104 POP_TOP
+
+ 24         106 LOAD_NAME                2 (swap)
+            108 LOAD_CONST               6 (29)
+            110 LOAD_CONST               7 (100)
+            112 CALL_FUNCTION            2
+            114 POP_TOP
+
+ 26         116 LOAD_CONST               6 (29)
+            118 STORE_NAME               3 (x)
+
+ 27         120 LOAD_NAME                4 (print)
+            122 LOAD_CONST               8 ('x=29')
+            124 CALL_FUNCTION            1
+            126 POP_TOP
+
+ 28         128 LOAD_NAME                4 (print)
+            130 LOAD_CONST               9 ('x * 2=')
+            132 LOAD_NAME                3 (x)
+            134 LOAD_CONST              10 (2)
+            136 BINARY_MULTIPLY
+            138 FORMAT_VALUE             2 (repr)
+            140 BUILD_STRING             2
+            142 CALL_FUNCTION            1
+            144 POP_TOP
+
+ 29         146 LOAD_NAME                4 (print)
+            148 LOAD_CONST              11 ('20 + 9=')
+            150 LOAD_CONST               6 (29)
+            152 FORMAT_VALUE             2 (repr)
+            154 BUILD_STRING             2
+            156 CALL_FUNCTION            1
+            158 POP_TOP
+
+ 30         160 LOAD_NAME                4 (print)
+            162 LOAD_CONST              15 ('100=')
+            164 LOAD_CONST               7 (100)
+            166 FORMAT_VALUE             2 (repr)
+            168 BUILD_STRING             2
+            170 CALL_FUNCTION            1
+            172 POP_TOP
+
+ 31         174 LOAD_NAME                4 (print)
+            176 LOAD_CONST              14 ('50 * 2=')
+            178 LOAD_CONST               7 (100)
+            180 FORMAT_VALUE             2 (repr)
+            182 BUILD_STRING             2
+            184 CALL_FUNCTION            1
+            186 POP_TOP
+            188 LOAD_CONST               1 (None)
+            190 RETURN_VALUE
+
+Disassembly of <code object deref at 0x0000019ABCB6AA80, file "mem_fuckery.py", line 3>:
+  4           0 LOAD_GLOBAL              0 (ctypes)
+              2 LOAD_METHOD              1 (cast)
+              4 LOAD_FAST                0 (addr)
+              6 LOAD_GLOBAL              0 (ctypes)
+              8 LOAD_METHOD              2 (POINTER)
+             10 LOAD_FAST                1 (typ)
+             12 CALL_METHOD              1
+             14 CALL_METHOD              2
+             16 RETURN_VALUE
+
+Disassembly of <code object swap at 0x0000019ABCB6AB30, file "mem_fuckery.py", line 7>:
+  8           0 LOAD_FAST                0 (a)
+              2 LOAD_METHOD              0 (to_bytes)
+              4 LOAD_CONST               1 (1)
+              6 LOAD_CONST               2 ('big')
+              8 CALL_METHOD              2
+             10 STORE_FAST               2 (bytes_a)
+
+  9          12 LOAD_FAST                1 (b)
+             14 LOAD_GLOBAL              1 (deref)
+             16 LOAD_GLOBAL              2 (id)
+             18 LOAD_FAST                0 (a)
+             20 CALL_FUNCTION            1
+             22 LOAD_GLOBAL              3 (ctypes)
+             24 LOAD_ATTR                4 (c_int)
+             26 CALL_FUNCTION            2
+             28 LOAD_CONST               3 (6)
+             30 STORE_SUBSCR
+
+ 10          32 LOAD_FAST                2 (bytes_a)
+             34 LOAD_GLOBAL              1 (deref)
+             36 LOAD_GLOBAL              2 (id)
+             38 LOAD_FAST                1 (b)
+             40 CALL_FUNCTION            1
+             42 LOAD_GLOBAL              3 (ctypes)
+             44 LOAD_ATTR                5 (c_char)
+             46 CALL_FUNCTION            2
+             48 LOAD_CONST               4 (24)
+             50 STORE_SUBSCR
+             52 LOAD_CONST               0 (None)
+             54 RETURN_VALUE

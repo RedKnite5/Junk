@@ -1,7 +1,7 @@
 import tkinter as tk
 import cmath as c
 import colorsys as csys
-#   python mandelbrot_zoom.py
+#  python mandelbrot_zoom_new_win.py
 	
 
 def html_color(color):
@@ -30,53 +30,58 @@ def give_point(event):
 	x, y = event.x, event.y
 	x = (((x/(100*size))-2)/zoom)+loc[0]
 	y = (((y/(100*size))-2)/zoom)+loc[1]
-	print(x," ",y)
-	loc = (x,y)
+	print(x, " ", y)
+	loc = (x, y)
 	magnify += 1 
 	zoom = 10**magnify
 	iter += 0
 	load()
 
 
-
-def point(A,B):
+def point(A, B):
 	z = 0
 	a = (((A/(100*size))-2)/zoom)+loc[0]
 	b = (((B/(100*size))-2)/zoom)+loc[1]
 	for k in range(iter):
 		if c.polar(z)[0] > 2:
-			return(k)
+			return k
 		z = z*z + (a+b*1j)
-	return(iter)
-			
+	return iter
+
+
 def load():
 	global i
 	if new_window:
 		windows.append(tk.Tk())
 		
-		canvases.append(tk.Canvas(windows[i],width=size*400,height=size*400))
+		canvases.append(tk.Canvas(windows[i], width=size*400, height=size*400))
 		canvases[i].pack()
 	
-	windows[i].bind("<Button 1>",give_point)
+	windows[i].bind("<Button 1>", give_point)
 	
 	for a in range(int(size*400)):
 		for b in range(int(size*400)):
-			value = point(a,b)
+			value = point(a, b)
 			
-			color = csys.hls_to_rgb(value/iter,100,1)
-			color = "#"+"".join(html_color(color))
+			color = csys.hls_to_rgb(value/iter, 100, 1)
+			color = "#" + "".join(html_color(color))
 			if value == iter:
 				color = "black"
-			canvases[i].create_line(a,b,a+1,b,fill=color)
+			canvases[i].create_line(a, b, a+1, b, fill=color)
 	if new_window:
 		i += 1
-		
-windows.append(tk.Tk())
-		
-canvases.append(tk.Canvas(windows[i],width=size*400,height=size*400))
-canvases[i].pack()
 
-load()
+if __name__ == "__main__":	
+	windows.append(tk.Tk())
+
+	canvases.append(tk.Canvas(windows[i],width=size*400,height=size*400))
+	canvases[i].pack()
+
+	load()
+
+	windows[0].mainloop()
 
 
-windows[0].mainloop()
+
+
+

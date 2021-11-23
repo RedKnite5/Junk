@@ -1,22 +1,10 @@
-
+#!/mnt/c/Users/RedKnite/AppData/Local/Programs/Python/Python38/python.exe
 # stuff.py
 
 
 
 
-import time
 
-class Context(object):
-    def __enter__(self):
-        pass
-
-    def __exit__(self, type, value, trace):
-        print("Ending")
-
-
-
-with Context():
-    print("script")
 
 
 
