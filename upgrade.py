@@ -12,12 +12,12 @@ if __name__ == "__main__":
 	import pkg_resources
 	from subprocess import run
 
-	run("python.exe -m pip install --upgrade pip --user", shell=True)
+	run(["python", "-m", "pip", "install", "--upgrade", "pip, "--user"])
 
 	packages = [dist.project_name for dist in pkg_resources.working_set]
 	for p in packages:
 		try:
-			run("pip.exe install --upgrade " + p + " --user", shell=True)
+			run(["python", "-m", "pip", "install", "--upgrade", p, "--user"])
 		except Exception:
 			pass
 
@@ -59,13 +59,13 @@ if __name__ == "__main__":
 	for i in failed_imports:
 		try:
 			if i == "curses":
-				pro = run("pip.exe install windows-curses --user", shell=True)
+				pro = run(["python", "-m", "pip", "install", "windows-curses", "--user"])
 			elif i == "PIL":
-				pro = run("pip.exe install pillow --user", shell=True)
+				pro = run(["python", "-m", "pip", "install", "pillow", "--user"])
 			elif i == "cv2":
-				pro = run("pip.exe install  opencv-python --user", shell=True)
+				pro = run(["python", "-m", "pip", "install", "opencv-python", "--user"])
 			else:
-				pro = run("pip.exe install " + i + " --user", shell=True)
+				pro = run(["python", "-m", "pip", "install", i, "--user"])
 			
 			if pro.returncode != 0:
 				failed_installs.append(i)
