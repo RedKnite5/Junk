@@ -1,7 +1,5 @@
 # sudoku.py
 
-#import numpy as np
-
 string = """
 000005409
 451002300
@@ -70,7 +68,8 @@ class Board(object):
 		present = set()
 		modified = False
 		
-		squares = [self.board[3 * (box // 3) + i // 3][3 * (box % 3) + i % 3] for i in range(self.size)]
+		squares = [self.board[3 * (box // 3) + i // 3][3 * (box % 3) + i % 3]
+					for i in range(self.size)]
 		
 		for square in squares:
 			if len(square) == 1:
