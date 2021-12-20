@@ -72,7 +72,7 @@ class Board(object):
 
 	def sudoku(self,
 				direction: Literal["hori", "vert", "box"],
-				num: Literal[1, 2, 3, 4, 5, 6, 7, 8, 9]) -> bool:
+				num: int) -> bool:
 		present = set()
 		modified = False
 		
@@ -98,7 +98,7 @@ class Board(object):
 	
 	def naked_single(self,
 				direction: Literal["hori", "vert", "box"],
-				num: Literal[1, 2, 3, 4, 5, 6, 7, 8, 9]) -> bool:
+				num: int) -> bool:
 		modified = False
 		
 		if direction == "hori":
@@ -111,7 +111,7 @@ class Board(object):
 		
 		for d in range(1, self.size + 1):
 			count = 0
-			location = None
+			location = set()
 			for square in squares:
 				if d in square:
 					count += 1
@@ -125,34 +125,24 @@ class Board(object):
 
 	def pair(self,
 				direction: Literal["hori", "vert", "box"],
-				num: Literal[1, 2, 3, 4, 5, 6, 7, 8, 9]):
+				num: int) -> bool:
 		modified = False
 		
 		if direction == "hori":
-			iterable = self.board[num]
+			squares = self.board[num]
 		elif direction == "vert":
-			iterable = self.board
+			squares = [row[num] for row in self.board]
 		elif direction == "box":
-			iterable = [self.board[3 * (num // 3) + i // 3][3 * (num % 3) + i % 3]
+			squares = [self.board[3 * (num // 3) + i // 3][3 * (num % 3) + i % 3]
 				for i in range(self.size)]
 		
-		pairs = {}
-		for obj in iterable:
-			if direction == "vert":
-				square = obj[num]
-			else:
-				square = obj
-			
+		pairs: dict[frozenset[int], int] = {}
+		for square in squares:
 			if len(square) == 2:
 				pairs.setdefault(frozenset(square), 0)
 				pairs[frozenset(square)] += 1
 		
-		for obj in iterable:
-			if direction == "vert":
-				square = obj[num]
-			else:
-				square = obj
-			
+		for square in squares:
 			for key, value in pairs.items():
 				if value != 2 or square == set(key):
 					continue
@@ -166,7 +156,7 @@ class Board(object):
 	# notepad++ highlighting bug? triple is not a keyword
 	def triple(self,
 				direction: Literal["hori", "vert", "box"],
-				num: Literal[1, 2, 3, 4, 5, 6, 7, 8, 9]) -> bool:
+				num: int) -> bool:
 		modified = False
 		
 		if direction == "hori":
@@ -177,7 +167,7 @@ class Board(object):
 			iterable = [self.board[3 * (num // 3) + i // 3][3 * (num % 3) + i % 3]
 				for i in range(self.size)]
 		
-		triples = {}
+		triples: dict[frozenset[int], int] = {}
 		for square in iterable:
 			if len(square) == 3:
 				triples.setdefault(frozenset(square), 0)
@@ -191,7 +181,7 @@ class Board(object):
 		
 		for square in iterable:
 			for key, value in triples.items():
-				if value != 3 or square.issubset(frozenset(key)):
+				if value != 3 or square.issubset(key):
 					continue
 				
 				if not modified and not set(key).isdisjoint(square):
@@ -241,9 +231,8 @@ class Board(object):
 
 	def check_strategy(self,
 		strategy: Callable[
-			[direction: Literal["hori", "vert", "box"],
-			num: Literal[1, 2, 3, 4, 5, 6, 7, 8, 9]],
-			bool]):
+			[Literal["hori", "vert", "box"], int],
+			bool]) -> bool:
 
 		mod = False
 		for i in range(self.size):
