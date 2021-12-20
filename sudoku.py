@@ -1,5 +1,7 @@
 # sudoku.py
 
+from typing import Literal, Callable
+
 easy = """
 000005409
 451002300
@@ -68,7 +70,9 @@ class Board(object):
 			in range(self.size)] for j in range(self.size)
 		]
 
-	def sudoku(self, direction, num: int):
+	def sudoku(self,
+				direction: Literal["hori", "vert", "box"],
+				num: Literal[1, 2, 3, 4, 5, 6, 7, 8, 9]) -> bool:
 		present = set()
 		modified = False
 		
@@ -92,7 +96,9 @@ class Board(object):
 		
 		return modified
 	
-	def naked_single(self, direction, num):
+	def naked_single(self,
+				direction: Literal["hori", "vert", "box"],
+				num: Literal[1, 2, 3, 4, 5, 6, 7, 8, 9]) -> bool:
 		modified = False
 		
 		if direction == "hori":
@@ -117,7 +123,9 @@ class Board(object):
 		
 		return modified
 
-	def pair(self, direction, num: int):
+	def pair(self,
+				direction: Literal["hori", "vert", "box"],
+				num: Literal[1, 2, 3, 4, 5, 6, 7, 8, 9]):
 		modified = False
 		
 		if direction == "hori":
@@ -156,7 +164,9 @@ class Board(object):
 		return modified
 	
 	# notepad++ highlighting bug? triple is not a keyword
-	def triple(self, direction, num: int):
+	def triple(self,
+				direction: Literal["hori", "vert", "box"],
+				num: Literal[1, 2, 3, 4, 5, 6, 7, 8, 9]) -> bool:
 		modified = False
 		
 		if direction == "hori":
@@ -190,7 +200,7 @@ class Board(object):
 		
 		return modified
 
-	def show(self):
+	def show(self) -> str:
 		s = "-" * 4 * self.size + "\n|"
 		
 		for row in self.board:
@@ -208,18 +218,19 @@ class Board(object):
 		
 		return s[:-1]
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.show()
 
-	def solve(self):
+	def solve(self) -> None:
+
 		modified = self.basic_pass()
 		while modified:
 			modified = self.basic_pass()
 			if not modified:
 				modified = modified or self.check_strategy(self.triple)
-					
 
 	def basic_pass(self) -> bool:
+
 		mod = False
 		
 		mod = mod or self.check_strategy(self.sudoku)
@@ -228,7 +239,12 @@ class Board(object):
 		
 		return mod
 
-	def check_strategy(self, strategy):
+	def check_strategy(self,
+		strategy: Callable[
+			[direction: Literal["hori", "vert", "box"],
+			num: Literal[1, 2, 3, 4, 5, 6, 7, 8, 9]],
+			bool]):
+
 		mod = False
 		for i in range(self.size):
 			mod = mod or strategy("hori", i)
@@ -236,7 +252,8 @@ class Board(object):
 			mod = mod or strategy("box", i)
 		return mod
 	
-	def to_string(self):
+	def to_string(self) -> str:
+
 		s = ""
 		for row in self.board:
 			for square in row:

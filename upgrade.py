@@ -32,7 +32,7 @@ if __name__ == "__main__":
 		"decimal", "collections", "doctest", "aiohttp", "docopt", "regex",
         "curses", "flask", "cv2", "networkx", "rope", "radon", "wily",
         "coverage", "pycodestyle", "pycurl", "savepagenow",
-		"antlr4-python3-runtime"]
+		"antlr4-python3-runtime", "mypy"]
 
 	modules_list = {}
 
