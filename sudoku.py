@@ -92,46 +92,17 @@ class Board(object):
 		
 		return modified
 	
-	def required_digits_row(self, row):
+	def naked_single(self, direction, num):
 		modified = False
 		
-		for d in range(1, self.size + 1):
-			count = 0
-			location = None
-			for square in self.board[row]:
-				if d in square:
-					count += 1
-					location = square
-			if count == 1 and len(location) > 1:
-				location.clear()
-				location.add(d)
-				modified = True
+		if direction == "hori":
+			squares = self.board[num]
+		elif direction == "vert":
+			squares = [row[num] for row in self.board]
+		elif direction == "box":
+			squares = [self.board[3 * (num // 3) + i // 3][3 * (num % 3) + i % 3]
+				for i in range(self.size)]
 		
-		return modified
-
-	def required_digits_column(self, column):
-		modified = False
-		
-		for d in range(1, self.size + 1):
-			count = 0
-			location = None
-			for row in self.board:
-				square = row[column]
-				if d in square:
-					count += 1
-					location = square
-			if count == 1 and len(location) > 1:
-				location.clear()
-				location.add(d)
-				modified = True
-		
-		return modified
-
-	def required_digits_box(self, box):
-		modified = False
-		
-		squares = [self.board[3 * (box // 3) + i // 3][3 * (box % 3) + i % 3]
-			for i in range(self.size)]
 		for d in range(1, self.size + 1):
 			count = 0
 			location = None
@@ -218,7 +189,7 @@ class Board(object):
 				square -= set(key)
 		
 		return modified
-	
+
 	def show(self):
 		s = "-" * 4 * self.size + "\n|"
 		
@@ -245,25 +216,24 @@ class Board(object):
 		while modified:
 			modified = self.basic_pass()
 			if not modified:
-				for i in range(self.size):
-					modified = modified or self.triple("hori", i)
-					modified = modified or self.triple("vert", i)
-					modified = modified or self.triple("box", i)
+				modified = modified or self.check_strategy(self.triple)
 					
 
 	def basic_pass(self) -> bool:
 		mod = False
+		
+		mod = mod or self.check_strategy(self.sudoku)
+		mod = mod or self.check_strategy(self.naked_single)
+		mod = mod or self.check_strategy(self.pair)
+		
+		return mod
+
+	def check_strategy(self, strategy):
+		mod = False
 		for i in range(self.size):
-			mod = mod or self.sudoku("hori", i)
-			mod = mod or self.sudoku("vert", i)
-			mod = mod or self.sudoku("box", i)
-			mod = mod or self.required_digits_row(i)
-			mod = mod or self.required_digits_column(i)
-			mod = mod or self.required_digits_box(i)
-			mod = mod or self.pair("hori", i)
-			mod = mod or self.pair("vert", i)
-			mod = mod or self.pair("box", i)
-			
+			mod = mod or strategy("hori", i)
+			mod = mod or strategy("vert", i)
+			mod = mod or strategy("box", i)
 		return mod
 	
 	def to_string(self):
@@ -278,7 +248,7 @@ class Board(object):
 		return s
 
 
-board = Board(evil[1:-1])
+board = Board(hard[1:-1])
 
 board.solve()
 print(board)
