@@ -49,7 +49,6 @@ evil = """
 """
 
 #ToDo:
-#  Pairs
 #  Hidden Pairs
 #  X-Wing
 #  XY-Wing
@@ -69,40 +68,17 @@ class Board(object):
 			in range(self.size)] for j in range(self.size)
 		]
 
-	def check_line(self, direction, num: int):
+	def sudoku(self, direction, num: int):
 		present = set()
 		modified = False
 		
-		iterable = self.board[num] if direction == "hori" else self.board
-		
-		for obj in iterable:
-			if direction == "vert":
-				square = obj[num]
-			else:
-				square = obj
-			
-			if len(square) == 1:
-				present.add(next(iter(square)))
-		
-		for obj in iterable:
-			if direction == "vert":
-				square = obj[num]
-			else:
-				square = obj
-
-			if len(square) > 1:
-				if not modified and not present.isdisjoint(square):
-					modified = True
-				square -= present
-		
-		return modified
-
-	def check_box(self, box: int):
-		present = set()
-		modified = False
-		
-		squares = [self.board[3 * (box // 3) + i // 3][3 * (box % 3) + i % 3]
-					for i in range(self.size)]
+		if direction == "hori":
+			squares = self.board[num]
+		elif direction == "vert":
+			squares = [row[num] for row in self.board]
+		elif direction == "box":
+			squares = [self.board[3 * (num // 3) + i // 3][3 * (num % 3) + i % 3]
+				for i in range(self.size)]
 		
 		for square in squares:
 			if len(square) == 1:
@@ -265,7 +241,6 @@ class Board(object):
 		return self.show()
 
 	def solve(self):
-		
 		modified = self.basic_pass()
 		while modified:
 			modified = self.basic_pass()
@@ -279,9 +254,9 @@ class Board(object):
 	def basic_pass(self) -> bool:
 		mod = False
 		for i in range(self.size):
-			mod = mod or self.check_line("hori", i)
-			mod = mod or self.check_line("vert", i)
-			mod = mod or self.check_box(i)
+			mod = mod or self.sudoku("hori", i)
+			mod = mod or self.sudoku("vert", i)
+			mod = mod or self.sudoku("box", i)
 			mod = mod or self.required_digits_row(i)
 			mod = mod or self.required_digits_column(i)
 			mod = mod or self.required_digits_box(i)
