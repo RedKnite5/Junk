@@ -12,6 +12,30 @@ easy = """
 005946802
 """
 
+hard = """
+530002000
+009030200
+027000010
+700000000
+018090005
+090100002
+000410070
+085700029
+004900500
+"""
+
+expert = """
+479005000
+000030008
+000000060
+340000001
+006050009
+800000006
+000000427
+007000000
+000190000
+"""
+
 evil = """
 000600010
 007000000
@@ -45,12 +69,7 @@ class Board(object):
 			in range(self.size)] for j in range(self.size)
 		]
 
-	def pair(self):
-		pass
-
 	def check_line(self, direction, num: int):
-		assert direction in ("hori", "vert")
-		
 		present = set()
 		modified = False
 		
@@ -78,12 +97,7 @@ class Board(object):
 		
 		return modified
 
-
-
 	def check_box(self, box: int):
-		column = box % 3
-		row = box // 3
-		
 		present = set()
 		modified = False
 		
@@ -117,8 +131,6 @@ class Board(object):
 				location.add(d)
 				modified = True
 		
-		if modified:
-			print("row")
 		return modified
 
 	def required_digits_column(self, column):
@@ -137,8 +149,6 @@ class Board(object):
 				location.add(d)
 				modified = True
 		
-		if modified:
-			print("column")
 		return modified
 
 	def required_digits_box(self, box):
@@ -158,10 +168,81 @@ class Board(object):
 				location.add(d)
 				modified = True
 		
-		if modified:
-			print("box")
 		return modified
 
+	def pair(self, direction, num: int):
+		modified = False
+		
+		if direction == "hori":
+			iterable = self.board[num]
+		elif direction == "vert":
+			iterable = self.board
+		elif direction == "box":
+			iterable = [self.board[3 * (num // 3) + i // 3][3 * (num % 3) + i % 3]
+				for i in range(self.size)]
+		
+		pairs = {}
+		for obj in iterable:
+			if direction == "vert":
+				square = obj[num]
+			else:
+				square = obj
+			
+			if len(square) == 2:
+				pairs.setdefault(frozenset(square), 0)
+				pairs[frozenset(square)] += 1
+		
+		for obj in iterable:
+			if direction == "vert":
+				square = obj[num]
+			else:
+				square = obj
+			
+			for key, value in pairs.items():
+				if value != 2 or square == set(key):
+					continue
+				
+				if not modified and not set(key).isdisjoint(square):
+					modified = True
+				square -= set(key)
+		
+		return modified
+	
+	# notepad++ highlighting bug? triple is not a keyword
+	def triple(self, direction, num: int):
+		modified = False
+		
+		if direction == "hori":
+			iterable = self.board[num]
+		elif direction == "vert":
+			iterable = [row[num] for row in self.board]
+		elif direction == "box":
+			iterable = [self.board[3 * (num // 3) + i // 3][3 * (num % 3) + i % 3]
+				for i in range(self.size)]
+		
+		triples = {}
+		for square in iterable:
+			if len(square) == 3:
+				triples.setdefault(frozenset(square), 0)
+				triples[frozenset(square)] += 1
+
+		for square in iterable:
+			if len(square) == 2:
+				for key in triples:
+					if square.issubset(key):
+						triples[key] += 1
+		
+		for square in iterable:
+			for key, value in triples.items():
+				if value != 3 or square.issubset(frozenset(key)):
+					continue
+				
+				if not modified and not set(key).isdisjoint(square):
+					modified = True
+				square -= set(key)
+		
+		return modified
+	
 	def show(self):
 		s = "-" * 4 * self.size + "\n|"
 		
@@ -185,9 +266,15 @@ class Board(object):
 
 	def solve(self):
 		
-		condition = self.basic_pass()
-		while condition:
-			condition = self.basic_pass()
+		modified = self.basic_pass()
+		while modified:
+			modified = self.basic_pass()
+			if not modified:
+				for i in range(self.size):
+					modified = modified or self.triple("hori", i)
+					modified = modified or self.triple("vert", i)
+					modified = modified or self.triple("box", i)
+					
 
 	def basic_pass(self) -> bool:
 		mod = False
@@ -198,6 +285,9 @@ class Board(object):
 			mod = mod or self.required_digits_row(i)
 			mod = mod or self.required_digits_column(i)
 			mod = mod or self.required_digits_box(i)
+			mod = mod or self.pair("hori", i)
+			mod = mod or self.pair("vert", i)
+			mod = mod or self.pair("box", i)
 			
 		return mod
 	
@@ -215,7 +305,6 @@ class Board(object):
 
 board = Board(evil[1:-1])
 
-print(board)
 board.solve()
 print(board)
 print(board.to_string())
