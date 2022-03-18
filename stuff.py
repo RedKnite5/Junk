@@ -3,47 +3,50 @@
 
 
 
-class MyDict(dict):
-	def __getitem__(self, attr):
-		print(f"Getting {attr!r}")
-		return super().__getitem__(attr)
-	
-	def __setitem__(self, attr, val):
-		print(f"Setting {attr!r} to {val!r}")
-		super().__setitem__(attr, val)
-	
-	def __repr__(self):
-		return f"MyDict({super().__repr__()})"
 
 
-class Meta(type):
+
+class DocInt(object):
+	def __init__(self, x=0, doc=None):
+		if doc is None:
+			if isinstance(x, DocInt):
+				self.doc = x.doc
+			else:
+				self.doc = str(x)
+		
+		self.x = x
+	
+	def __getattr__(self, attr):
+		return getattr(x, attr)
+	
+
 	@classmethod
-	def __prepare__(cls, name, bases, **kwds):
-		print(f"{name = !r}\n{bases = !r}\n{kwds = !r}")
+	def ops(cls, op, symbol):
+		def func(self, other):
+			if isinstance(other, cls):
+				self.doc = f"{self.doc} {symbol} {other.doc}"
+				return super().__add__(int(other))
+			else:
+				self.doc = f"{self.doc} {symbol} {other}"
+				return super().__add__(other)
+
+		def rfunc(self, other):
+			if isinstance(other, cls):
+				self.doc = f"{other.doc} {symbol} {self.doc}"
+				return super().__add__(int(other))
+			else:
+				self.doc = f"{other} {symbol} {self.doc}"
+				return super().__add__(other)
 		
-		return MyDict()
-	
-	def __new__(cls, name, bases, ns):
-		print(f"{ns = }")
+		func.__name__ = f"__{op.__name__}__"
+		func.__doc__ = op.__doc__
 		
-		obj = super().__new__(cls, name, bases, ns)
+		ifunc = func
 		
-		#obj.__dict__["hi"] = "test"
-		#setattr(obj, "__dict__", ns)
-		return obj
+		rfunc.__name__ = f"__r{op.__name__}__"
+		rfunc.__doc__ = op.__doc__
+		
 
 
-class Base(metaclass=Meta):
-	def __init__(self):
-		self.x = 5
-	
 
-print(MyDict())
-
-a = Base()
-
-
-print(Base.__dict__)
-
-print(getattr(a, "x"))
 

