@@ -27,12 +27,12 @@ if __name__ == "__main__":
 		"threading", "webbrowser", "email", "selenium", "cmath",
 		"bs4", "platform", "pylab", "numba", "unittest", "keras",
 		"warnings", "scrapy", "nltk", "pandas", "matplotlib", "boto3",
-		"gensim", "pygame", "pyglet", "seaborn", "keyboard",
+		"pygame", "pyglet", "seaborn", "keyboard",
 		"envelopes", "arrow", "plotly", "sqlalchemy", "twisted",
 		"decimal", "collections", "doctest", "aiohttp", "docopt", "regex",
         "curses", "flask", "cv2", "networkx", "rope", "radon", "wily",
         "coverage", "pycodestyle", "pycurl", "savepagenow",
-		"antlr4-python3-runtime", "mypy"]
+		"antlr4-python3-runtime", "mypy", "PyPDF2"]
 
 	modules_list = {}
 
