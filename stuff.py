@@ -24,6 +24,7 @@ class DocInt(object):
 	def ops(cls, op, symbol):
 		def func(self, other):
 			if isinstance(other, cls):
+				op(
 				self.doc = f"{self.doc} {symbol} {other.doc}"
 				return super().__add__(int(other))
 			else:
