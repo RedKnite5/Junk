@@ -1,28 +1,3 @@
-"""
-print("secret")
-"""
-
-print("normal")
-
-
-"""
-print("more secret")
-
-"""
-import sys
-f = open(sys.argv[0])
-next(f)
-exec("".join(f))
-#"""
-
-
-
-
-
-
-a, b = 1, 2
-
-'''
 
 data = [1, 2, 3]
 
@@ -48,8 +23,7 @@ if modify_hb:
 
 	f = open(sys.argv[0])
 	program = "".join(f).replace(chr(98 + ab), "")
-	
+	f.close()
 	exec(program)
 
-'''
 
