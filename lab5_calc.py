@@ -29,13 +29,41 @@ data = np.asarray([
 ])
 
 
+
+# Logarithmic regression
+# 0.0685 + 0.1394 * ln(x)
+
 T2 = 0
 P2 = internal_pressure(T2)
 #print(P2)
 
+"""
 plt.title("Lab Data") 
 plt.xlabel("Internal Pressure (Pa)")
 plt.ylabel("Height (m)") 
 
 plt.plot(data[:, 0], data[:, 1], "o")
 plt.show()
+"""
+
+
+
+#Logarithmic regression
+def log_regression(data):
+    x = np.log(data[:, 0])
+    y = np.log(data[:, 1])
+    m, b = np.polyfit(x, y, 1)
+    return m, b
+
+
+data = np.asarray([
+    [2, 1],
+    [4, 2],
+    [8, 3],
+    [16, 4],
+    [32, 5],
+    [64, 6],
+    [128, 7],
+])
+
+print(log_regression(data))
