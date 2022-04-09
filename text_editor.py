@@ -17,12 +17,14 @@ class Coordinate:
     def __set__(self, instance, value):
         instance.cursor[self.index] = value
 
+
 class CurrentLine:
     def __get__(self, instance, owner):
         return instance.lines[instance.y]
     
     def __set__(self, instance, value):
         self.lines[instance.y] = value
+
 
 class TextArray:
     x = Coordinate(0)
@@ -53,12 +55,14 @@ class TextEditor:
 
         self.text = TextArray()
         self.font_size = 12
+        self.font = tkFont.Font(family="Courier", size=self.font_size)
+        self.char_width = self.font.measure("A")
 
         self.canvas.create_line(
-            self.text.x + self.font_size,      # x1
-            self.text.y + self.font_size,      # y1
-            self.text.x + self.font_size,      # x2
-            self.text.y + 2 * self.font_size,   # y2
+            self.text.x + self.char_width,      # x1
+            self.text.y + self.char_width,      # y1
+            self.text.x + self.char_width,      # x2
+            self.text.y + 2 * self.char_width,   # y2
             tag="cursor"
         )
         self.canvas.focus_set()
@@ -72,8 +76,8 @@ class TextEditor:
     def update_cursor(self):
         self.canvas.moveto(
             "cursor",
-            (self.text.x + 1) * self.font_size,
-            (self.text.y + 1) * self.font_size
+            (self.text.x + 1) * self.char_width,
+            (self.text.y + 1) * self.char_width
         )
 
     def key_press(self, event):
@@ -82,11 +86,11 @@ class TextEditor:
 
         self.canvas.delete(f"line_{self.text.y}")
         self.canvas.create_text(
-            self.font_size,                        # x
-            self.font_size * (self.text.y + 1),    # y
+            self.char_width,                        # x
+            self.char_width * (self.text.y + 1),    # y
             text="".join(self.text.current_line),
             anchor='nw',
-            font=('TkMenuFont', self.font_size),
+            font=self.font,
             fill='black',
             tag=f"line_{self.text.y}"
         )
