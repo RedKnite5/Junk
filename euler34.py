@@ -5,7 +5,7 @@
 
 max = 362880
 
-def fact(n: int):
+def fact(n: int) -> int:
   if n < 0:
     raise ValueError("negative value for factorial")
   result: int = 1
@@ -15,14 +15,14 @@ def fact(n: int):
 
 facts = {str(d): fact(d) for d in range(10)}
 
-def fact_digit_sum(n: int):
+def fact_digit_sum(n: int) -> int:
   total: int = 0
   for d in str(n):
     total += facts[d]
   return total
 
 
-def main():
+def main() -> None:
   total = sum(n for n in range(3, max) if fact_digit_sum(n) == n)
 
   print(f"{total = }")
