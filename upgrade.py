@@ -22,17 +22,15 @@ if __name__ == "__main__":
 			pass
 
 	libs = ["sympy", "hashlib", "time", "tkinter", "tensorflow",
-        "cx_Freeze", "datetime", "timeit", "urllib.request", "numpy",
-		"string", "colorsys", "PIL", "pydub", "statistics",
+        "cx_Freeze", "urllib.request", "numpy", "PIL", "pydub", "statistics",
 		"threading", "webbrowser", "email", "selenium", "cmath",
 		"bs4", "platform", "pylab", "numba", "unittest", "keras",
 		"warnings", "scrapy", "nltk", "pandas", "matplotlib", "boto3",
-		"pygame", "pyglet", "seaborn", "keyboard",
-		"envelopes", "arrow", "plotly", "sqlalchemy", "twisted",
+		"pygame", "pyglet", "keyboard", "plotly", "sqlalchemy", "twisted",
 		"decimal", "collections", "doctest", "aiohttp", "docopt", "regex",
-        "curses", "flask", "cv2", "networkx", "rope", "radon", "wily",
+        "curses", "flask", "cv2", "networkx", "rope", "wily",
         "coverage", "pycodestyle", "pycurl", "savepagenow",
-		"antlr4-python3-runtime", "mypy", "PyPDF2", "django"]
+		"antlr4-python3-runtime", "mypy", "PyPDF2", "django", "pyautogui",]
 
 	modules_list = {}
 
