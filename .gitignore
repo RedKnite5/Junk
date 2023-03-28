@@ -9,6 +9,9 @@ text.txt
 info.txt
 geckodriver.log
 noadd.txt
+.replit
+replit.nix
+venv
 
 *.txt
 *.log
